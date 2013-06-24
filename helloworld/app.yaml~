@@ -16,9 +16,3 @@ libraries:
 - name: jinja2
   version: 2.6
 
-indexes:
-- kind: Greeting
-  ancestor: yes
-  properties:
-  - name: date
-    direction: desc
