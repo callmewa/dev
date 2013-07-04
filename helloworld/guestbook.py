@@ -1,11 +1,12 @@
 import os
 import urllib
+import logging
+import jinja2
+import webapp2
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
-
-import jinja2
-import webapp2
+from google.appengine.api import memcache
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -27,10 +28,16 @@ class MainPage(webapp2.RequestHandler):
   def get(self):
     guestbook_name = self.request.get('guestbook_name',
                                       DEFAULT_GUESTBOOK_NAME)
-    greetings_query = Greeting.query(
-        ancestor=guestbook_key(guestbook_name)).order(-Greeting.date)
-    greetings = greetings_query.fetch(10)
-
+    #using memcache                                   
+    greetings = memcache.get('%s:greetings' % guestbook_name)
+    if greetings is None:         
+      logging.info('Query DataStore')                       
+      greetings_query = Greeting.query(
+          ancestor=guestbook_key(guestbook_name)).order(-Greeting.date)
+      greetings = greetings_query.fetch(10)
+      if not memcache.add('%s:greetings' % guestbook_name, greetings, 10):
+        logging.error('Memcache set failed on %s' % guestbook_name)
+        
     if users.get_current_user():
         url = users.create_logout_url(self.request.uri)
         url_linktext = 'Logout'
