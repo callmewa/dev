@@ -15,13 +15,14 @@ import logging
 import os
 import random
 import re
-from django.utils import simplejson
+import json as simplejson
+import webapp2 as webapp
 from google.appengine.api import channel
 from google.appengine.api import users
 from google.appengine.ext import db
-from google.appengine.ext import webapp
+#from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
-from google.appengine.ext.webapp.util import run_wsgi_app
+#from google.appengine.ext.webapp.util import run_wsgi_app
 
 
 class Game(db.Model):
@@ -151,7 +152,7 @@ class MainPage(webapp.RequestHandler):
         game.put()
       else:
         game = Game.get_by_key_name(game_key)
-        if not game.userO:
+        if not game.userO and user != game.userX:
           game.userO = user
           game.put()
 
@@ -174,14 +175,15 @@ class MainPage(webapp.RequestHandler):
       self.redirect(users.create_login_url(self.request.uri))
 
 
-application = webapp.WSGIApplication([
+app = webapp.WSGIApplication([
     ('/', MainPage),
     ('/opened', OpenedPage),
     ('/move', MovePage)], debug=True)
 
-
+'''
 def main():
   run_wsgi_app(application)
 
 if __name__ == "__main__":
   main()
+'''
