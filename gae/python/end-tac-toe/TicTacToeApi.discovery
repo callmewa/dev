@@ -1,0 +1,201 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"s1omim4x8ymp9_6H8kBMkfEDqpo/lgqsM96wKECLnJK5Eeh8Mu6-UG8\"",
+ "discoveryVersion": "v1",
+ "id": "tictactoe:v1",
+ "name": "tictactoe",
+ "version": "v1",
+ "description": "Tic Tac Toe API",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rest",
+ "baseUrl": "https://None/_ah/api/tictactoe/v1/",
+ "basePath": "/_ah/api/tictactoe/v1/",
+ "rootUrl": "https://None/_ah/api/",
+ "servicePath": "tictactoe/v1/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "TictactoeApiMessagesBoardMessage": {
+   "id": "TictactoeApiMessagesBoardMessage",
+   "type": "object",
+   "description": "ProtoRPC message definition to represent a board.",
+   "properties": {
+    "state": {
+     "type": "string"
+    }
+   }
+  },
+  "TictactoeApiMessagesScoreRequestMessage": {
+   "id": "TictactoeApiMessagesScoreRequestMessage",
+   "type": "object",
+   "description": "ProtoRPC message definition to represent a score to be inserted.",
+   "properties": {
+    "outcome": {
+     "type": "string"
+    }
+   }
+  },
+  "TictactoeApiMessagesScoreResponseMessage": {
+   "id": "TictactoeApiMessagesScoreResponseMessage",
+   "type": "object",
+   "description": "ProtoRPC message definition to represent a score that is stored.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "outcome": {
+     "type": "string"
+    },
+    "played": {
+     "type": "string"
+    }
+   }
+  },
+  "TictactoeApiMessagesScoresListResponse": {
+   "id": "TictactoeApiMessagesScoresListResponse",
+   "type": "object",
+   "description": "ProtoRPC message definition to represent a list of stored scores.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "ProtoRPC message definition to represent a score that is stored.",
+     "items": {
+      "$ref": "TictactoeApiMessagesScoreResponseMessage"
+     }
+    }
+   }
+  }
+ },
+ "resources": {
+  "board": {
+   "methods": {
+    "getmove": {
+     "id": "tictactoe.board.getmove",
+     "path": "board",
+     "httpMethod": "POST",
+     "description": "Exposes an API endpoint to simulate a computer move in tictactoe. Args: request: An instance of BoardMessage parsed from the API request. Returns: An instance of BoardMessage with a single 'O' added to the board passed in.",
+     "request": {
+      "$ref": "TictactoeApiMessagesBoardMessage"
+     },
+     "response": {
+      "$ref": "TictactoeApiMessagesBoardMessage"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "scores": {
+   "methods": {
+    "insert": {
+     "id": "tictactoe.scores.insert",
+     "path": "scores",
+     "httpMethod": "POST",
+     "description": "Exposes an API endpoint to insert a score for the current user. Args: request: An instance of ScoreRequestMessage parsed from the API request. Returns: An instance of ScoreResponseMessage containing the score inserted, the time the score was inserted and the ID of the score.",
+     "request": {
+      "$ref": "TictactoeApiMessagesScoreRequestMessage"
+     },
+     "response": {
+      "$ref": "TictactoeApiMessagesScoreResponseMessage"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "list": {
+     "id": "tictactoe.scores.list",
+     "path": "scores",
+     "httpMethod": "GET",
+     "description": "Exposes an API endpoint to query for scores for the current user. Args: request: An instance of ScoresListRequest parsed from the API request. Returns: An instance of ScoresListResponse containing the scores for the current user returned in the query. If the API request specifies an order of WHEN (the default), the results are ordered by time from most recent to least recent. If the API request specifies an order of TEXT, the results are ordered by the string value of the scores.",
+     "parameters": {
+      "limit": {
+       "type": "string",
+       "default": "10",
+       "format": "int64",
+       "location": "query"
+      },
+      "order": {
+       "type": "string",
+       "default": "WHEN",
+       "enum": [
+        "TEXT",
+        "WHEN"
+       ],
+       "enumDescriptions": [
+        "",
+        ""
+       ],
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "TictactoeApiMessagesScoresListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  }
+ }
+}
