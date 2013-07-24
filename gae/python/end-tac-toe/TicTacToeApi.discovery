@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"s1omim4x8ymp9_6H8kBMkfEDqpo/lgqsM96wKECLnJK5Eeh8Mu6-UG8\"",
+ "etag": "\"s1omim4x8ymp9_6H8kBMkfEDqpo/BHehg-i4x8bm0jel_J-igypQK1I\"",
  "discoveryVersion": "v1",
  "id": "tictactoe:v1",
  "name": "tictactoe",
@@ -73,30 +73,18 @@
   }
  },
  "schemas": {
-  "TictactoeApiMessagesBoardMessage": {
-   "id": "TictactoeApiMessagesBoardMessage",
+  "Board": {
+   "id": "Board",
    "type": "object",
-   "description": "ProtoRPC message definition to represent a board.",
    "properties": {
     "state": {
      "type": "string"
     }
    }
   },
-  "TictactoeApiMessagesScoreRequestMessage": {
-   "id": "TictactoeApiMessagesScoreRequestMessage",
+  "Score": {
+   "id": "Score",
    "type": "object",
-   "description": "ProtoRPC message definition to represent a score to be inserted.",
-   "properties": {
-    "outcome": {
-     "type": "string"
-    }
-   }
-  },
-  "TictactoeApiMessagesScoreResponseMessage": {
-   "id": "TictactoeApiMessagesScoreResponseMessage",
-   "type": "object",
-   "description": "ProtoRPC message definition to represent a score that is stored.",
    "properties": {
     "id": {
      "type": "string",
@@ -107,20 +95,53 @@
     },
     "played": {
      "type": "string"
+    },
+    "player": {
+     "$ref": "UserMessage",
+     "description": "ProtoRPC container for users.User objects. Attributes: email: String; The email of the user. auth_domain: String; The auth domain of the user. user_id: String; The user ID. federated_identity: String; The federated identity of the user."
     }
    }
   },
-  "TictactoeApiMessagesScoresListResponse": {
-   "id": "TictactoeApiMessagesScoresListResponse",
+  "ScoreCollection": {
+   "id": "ScoreCollection",
    "type": "object",
-   "description": "ProtoRPC message definition to represent a list of stored scores.",
    "properties": {
     "items": {
      "type": "array",
-     "description": "ProtoRPC message definition to represent a score that is stored.",
      "items": {
-      "$ref": "TictactoeApiMessagesScoreResponseMessage"
+      "$ref": "Score"
      }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
+  "ScoreProtoOutcome": {
+   "id": "ScoreProtoOutcome",
+   "type": "object",
+   "properties": {
+    "outcome": {
+     "type": "string"
+    }
+   }
+  },
+  "UserMessage": {
+   "id": "UserMessage",
+   "type": "object",
+   "description": "ProtoRPC container for users.User objects. Attributes: email: String; The email of the user. auth_domain: String; The auth domain of the user. user_id: String; The user ID. federated_identity: String; The federated identity of the user.",
+   "properties": {
+    "auth_domain": {
+     "type": "string"
+    },
+    "email": {
+     "type": "string"
+    },
+    "federated_identity": {
+     "type": "string"
+    },
+    "user_id": {
+     "type": "string"
     }
    }
   }
@@ -132,12 +153,12 @@
      "id": "tictactoe.board.getmove",
      "path": "board",
      "httpMethod": "POST",
-     "description": "Exposes an API endpoint to simulate a computer move in tictactoe. Args: request: An instance of BoardMessage parsed from the API request. Returns: An instance of BoardMessage with a single 'O' added to the board passed in.",
      "request": {
-      "$ref": "TictactoeApiMessagesBoardMessage"
+      "$ref": "Board",
+      "parameterName": "resource"
      },
      "response": {
-      "$ref": "TictactoeApiMessagesBoardMessage"
+      "$ref": "Board"
      },
      "scopes": [
       "https://www.googleapis.com/auth/userinfo.email"
@@ -147,16 +168,38 @@
   },
   "scores": {
    "methods": {
+    "get": {
+     "id": "tictactoe.scores.get",
+     "path": "scores/{id}",
+     "httpMethod": "GET",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "Score"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
     "insert": {
      "id": "tictactoe.scores.insert",
      "path": "scores",
      "httpMethod": "POST",
-     "description": "Exposes an API endpoint to insert a score for the current user. Args: request: An instance of ScoreRequestMessage parsed from the API request. Returns: An instance of ScoreResponseMessage containing the score inserted, the time the score was inserted and the ID of the score.",
      "request": {
-      "$ref": "TictactoeApiMessagesScoreRequestMessage"
+      "$ref": "ScoreProtoOutcome",
+      "parameterName": "resource"
      },
      "response": {
-      "$ref": "TictactoeApiMessagesScoreResponseMessage"
+      "$ref": "Score"
      },
      "scopes": [
       "https://www.googleapis.com/auth/userinfo.email"
@@ -166,11 +209,9 @@
      "id": "tictactoe.scores.list",
      "path": "scores",
      "httpMethod": "GET",
-     "description": "Exposes an API endpoint to query for scores for the current user. Args: request: An instance of ScoresListRequest parsed from the API request. Returns: An instance of ScoresListResponse containing the scores for the current user returned in the query. If the API request specifies an order of WHEN (the default), the results are ordered by time from most recent to least recent. If the API request specifies an order of TEXT, the results are ordered by the string value of the scores.",
      "parameters": {
       "limit": {
        "type": "string",
-       "default": "10",
        "format": "int64",
        "location": "query"
       },
@@ -186,10 +227,14 @@
         ""
        ],
        "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "location": "query"
       }
      },
      "response": {
-      "$ref": "TictactoeApiMessagesScoresListResponse"
+      "$ref": "ScoreCollection"
      },
      "scopes": [
       "https://www.googleapis.com/auth/userinfo.email"

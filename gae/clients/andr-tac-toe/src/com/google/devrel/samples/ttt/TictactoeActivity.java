@@ -27,6 +27,7 @@ import com.google.api.services.tictactoe.Tictactoe;
 import com.google.api.services.tictactoe.model.Board;
 import com.google.api.services.tictactoe.model.Score;
 import com.google.api.services.tictactoe.model.ScoreCollection;
+import com.google.api.services.tictactoe.model.ScoreProtoOutcome;
 
 /**
  * Main activity for the application, it handles the game UI and auth and
@@ -203,7 +204,7 @@ public class TictactoeActivity extends Activity {
    * @param status outcome of the game
    */
   private void sendResultToServer(int status) {
-    Score score = new Score();
+    ScoreProtoOutcome score = new ScoreProtoOutcome();
     score.setOutcome(STATUS_STRINGS[status]);
     new SendResultToServerTask().execute(score);
   }
@@ -212,9 +213,9 @@ public class TictactoeActivity extends Activity {
    * Handles the request to the Score Endpoint, to save a score, without
    * blocking the UI.
    */
-  private class SendResultToServerTask extends AsyncTask<Score, Void, Void> {
+  private class SendResultToServerTask extends AsyncTask<ScoreProtoOutcome, Void, Void> {
     @Override
-    protected Void doInBackground(Score... scores) {
+    protected Void doInBackground(ScoreProtoOutcome... scores) {
       try {
         service.scores().insert(scores[0]).execute();
       } catch (IOException e) {

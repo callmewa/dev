@@ -19,7 +19,7 @@
 package com.google.api.services.tictactoe.model;
 
 /**
- * Model definition for ScoreCollection.
+ * Model definition for ScoreProtoOutcome.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the . For a detailed explanation see:
@@ -29,58 +29,37 @@ package com.google.api.services.tictactoe.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class ScoreCollection extends com.google.api.client.json.GenericJson {
+public final class ScoreProtoOutcome extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.util.List<Score> items;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String nextPageToken;
+  private java.lang.String outcome;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.util.List<Score> getItems() {
-    return items;
+  public String getOutcome() {
+    return outcome;
   }
 
   /**
-   * @param items items or {@code null} for none
+   * @param outcome outcome or {@code null} for none
    */
-  public ScoreCollection setItems(java.util.List<Score> items) {
-    this.items = items;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public String getNextPageToken() {
-    return nextPageToken;
-  }
-
-  /**
-   * @param nextPageToken nextPageToken or {@code null} for none
-   */
-  public ScoreCollection setNextPageToken(String nextPageToken) {
-    this.nextPageToken = nextPageToken;
+  public ScoreProtoOutcome setOutcome(String outcome) {
+    this.outcome = outcome;
     return this;
   }
 
   @Override
-  public ScoreCollection set(String fieldName, Object value) {
-    return (ScoreCollection) super.set(fieldName, value);
+  public ScoreProtoOutcome set(String fieldName, Object value) {
+    return (ScoreProtoOutcome) super.set(fieldName, value);
   }
 
   @Override
-  public ScoreCollection clone() {
-    return (ScoreCollection) super.clone();
+  public ScoreProtoOutcome clone() {
+    return (ScoreProtoOutcome) super.clone();
   }
 
 }
