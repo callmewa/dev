@@ -1,4 +1,4 @@
-package com.google.devrel.samples.ttt;
+package com.tactoe;
 
 import java.io.IOException;
 import java.util.ArrayList;
