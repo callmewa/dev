@@ -57,7 +57,7 @@ public class Tictactoe extends com.google.api.client.googleapis.services.json.Ab
    *
    * @since 1.7
    */
-  public static final String DEFAULT_ROOT_URL = "https://None/_ah/api/";
+  public static final String DEFAULT_ROOT_URL = "https://tac-toe.appspot.com/_ah/api/";
 
   /**
    * The default encoded service path of the service. This is determined when the library is

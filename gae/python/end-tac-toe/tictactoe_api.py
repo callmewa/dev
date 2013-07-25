@@ -22,8 +22,9 @@ from models import Score
 
 @endpoints.api(name='tictactoe', version='v1',
                description='Tic Tac Toe API',
-               allowed_client_ids=['YOUR-CLIENT-ID',
-                                   endpoints.API_EXPLORER_CLIENT_ID])
+               allowed_client_ids=['1022962392715-jrn1088k104n9d1aaapcmd49ijf8irdh.apps.googleusercontent.com',
+               '1022962392715.apps.googleusercontent.com', endpoints.API_EXPLORER_CLIENT_ID],
+               audiences = ['1022962392715.apps.googleusercontent.com',])
 class TicTacToeApi(remote.Service):
 
   @Board.method(path='board', http_method='POST',
