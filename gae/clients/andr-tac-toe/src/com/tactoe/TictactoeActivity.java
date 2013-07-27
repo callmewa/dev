@@ -400,20 +400,24 @@ public class TictactoeActivity extends Activity {
     settings = getSharedPreferences(TAG, 0);
     credential = GoogleAccountCredential.usingAudience(this, ClientCredentials.AUDIENCE);
     setAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
-
-    Tictactoe.Builder builder = new Tictactoe.Builder(
-        AndroidHttp.newCompatibleTransport(), new GsonFactory(),
-        credential);
-    service = builder.build();
-
-    if (credential.getSelectedAccountName() != null) {
-      onSignIn();
-    }
-
     Logger.getLogger("com.google.api.client").setLevel(LOGGING_LEVEL);
   }
 
   @Override
+  protected void onStart() {
+      super.onStart();
+      Tictactoe.Builder builder = new Tictactoe.Builder(
+              AndroidHttp.newCompatibleTransport(), new GsonFactory(),
+              credential);
+      service = builder.build();
+
+      if (credential.getSelectedAccountName() != null) {
+          onSignIn();
+      }
+
+  }
+
+    @Override
   protected void onResume() {
     super.onResume();
     checkGooglePlayServicesAvailable();
