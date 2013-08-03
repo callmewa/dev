@@ -177,6 +177,7 @@ public class TictactoeActivity extends Activity {
       Board newBoard = null;
       try {
         newBoard = service.board().getmove(boards[0]).execute();
+        Log.d("board state: ", newBoard.getState());
         return newBoard;
       } catch (IOException e) {
         Log.d("TicTacToe", e.getMessage(), e);
