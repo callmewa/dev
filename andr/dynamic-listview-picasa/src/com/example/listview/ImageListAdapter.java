@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.picasa.model.Entry;
@@ -50,11 +49,11 @@ public class ImageListAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        RelativeLayout itemView;
+        ViewGroup itemView;
         if (convertView == null){
-            itemView = (RelativeLayout) mLayoutInflater.inflate(R.layout.list_item, parent, false);
+            itemView = (ViewGroup) mLayoutInflater.inflate(R.layout.list_item_test, parent, false);
         }else{
-            itemView = (RelativeLayout) convertView;
+            itemView = (ViewGroup) convertView;
         }
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.listImage);
