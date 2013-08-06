@@ -16,4 +16,6 @@
 
 <resources>
     <string name="app_name">Dynamic ListView Demo</string>
+    <string name="detail_title_key">detail.title</string>
+    <string name="detail_img_url_key">detail.img.url</string>
 </resources>

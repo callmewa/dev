@@ -22,10 +22,7 @@ public class TextViewBordered extends TextView {
     public TextViewBordered(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a;
-        a = context.getTheme().obtainStyledAttributes(
-                attrs,
-                R.styleable.TextViewBordered, 0, 0);
-
+        a = context.obtainStyledAttributes(attrs, R.styleable.TextViewBordered);
         String border_color = a.getString(R.styleable.TextViewBordered_border_color);
         a.recycle();
         initWithColor(border_color);

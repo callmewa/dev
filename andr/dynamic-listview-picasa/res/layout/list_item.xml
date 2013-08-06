@@ -1,45 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+    <android.widget.ext.TextViewBordered
+            android:id="@+id/textOverlay"
+            android:text="New Text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:textSize="14dip"
+            android:layout_marginLeft="10dip"/>
     <ImageView
             android:id="@+id/listImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="10dp"
-            android:background="#ffcccccc"/>
-    <TextView
-        android:id="@+id/listTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/listImage"
-        android:layout_toRightOf="@+id/listImage"
-        android:text="A List item title"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-    <TextView
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            />
+    <android.widget.ext.TextViewBordered
+            android:id="@+id/listTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:textSize="12dip"
+            android:layout_marginLeft="10dip"/>
+    <android.widget.ext.TextViewBordered
             android:id="@+id/listDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/listTitle"
-            android:layout_marginTop="5dp"
-            android:maxLines="4"
-            android:layout_toRightOf="@+id/listImage"
-            android:text="The List item description"
-            android:textSize="14sp" />
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textOverlay"
-            android:layout_alignTop="@+id/listImage"
-            android:layout_alignRight="@+id/listImage"
-            android:layout_alignBottom="@+id/listImage"
-            android:layout_alignLeft="@+id/listImage"
-            android:textColor="#ffffff"
-            android:visibility="invisible"/>
-</RelativeLayout>
+            android:layout_gravity="left|center_vertical"
+            android:textSize="12dip"
+            android:layout_marginLeft="10dip"/>
+</LinearLayout>
