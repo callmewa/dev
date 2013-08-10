@@ -66,7 +66,7 @@ public class ImageListAdapter extends BaseAdapter{
         String imageUrl = mEntries.get(position).getContent().getSrc();
         mImageDownloader.download(imageUrl, imageView);
 
-        //ImageTask task = new ImageTask(imageView);
+        //PicasaTask task = new PicasaTask(imageView);
         //task.execute(imageUrl);
 
         String title = mEntries.get(position).getTitle().toString();

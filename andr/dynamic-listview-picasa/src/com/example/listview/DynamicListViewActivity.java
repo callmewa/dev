@@ -15,13 +15,6 @@ public class DynamicListViewActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        Parse.initialize(this, "QzxusTbe7vVnaxERIeakh0R3jHTcLKm3N4WNZAa0", "w7OdYvPNlYPx6jcURuqfi1MUWd81MugaYiQ7f0xI");
-//        ParseAnalytics.trackAppOpened(getIntent());
-//
-//        ParseObject testObject = new ParseObject("TestObject");
-//        testObject.put("foo", "bar");
-//        testObject.saveInBackground();
-
         setContentView(R.layout.list);
 
         ImageListAdapter adapter = new ImageListAdapter(this);
