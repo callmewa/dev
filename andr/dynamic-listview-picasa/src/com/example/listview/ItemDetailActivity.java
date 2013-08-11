@@ -3,15 +3,16 @@ package com.example.listview;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Created by callmewa on 8/5/13.
  */
 public class ItemDetailActivity extends FragmentActivity {
 
-    private final ImageDownloader mImageDownloader = new ImageDownloader();
+    private ImageDownloader mImageDownloader = null;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,11 +23,14 @@ public class ItemDetailActivity extends FragmentActivity {
 
         TextView textView = (TextView) findViewById(R.id.detail_title);
         textView.setText(itemTitle);
-
-        ImageView imageView = (ImageView) findViewById(R.id.detailImage);
-        String imageUrl = getIntent().getStringExtra(getResources().getString(R.string.detail_img_url_key));
-        mImageDownloader.setMode(ImageDownloader.Mode.CORRECT);
-        mImageDownloader.download(imageUrl,imageView );
-
+        Long sharedkey = getIntent().getLongExtra("shared_key", -1);
+        Object obj = IntentMap.SharedMap.remove(sharedkey);
+        if(obj != null){
+            mImageDownloader = ((WeakReference<ImageDownloader>)obj).get();
+            if(mImageDownloader == null){
+                mImageDownloader = new ImageDownloader();
+                mImageDownloader.setMode(ImageDownloader.Mode.CORRECT);
+            }
+        }
     }
 }

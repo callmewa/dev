@@ -23,7 +23,7 @@ public class ImageListAdapter extends BaseAdapter{
 
     private ArrayList<Entry> mEntries = new ArrayList<Entry>();
 
-    private final ImageDownloader mImageDownloader = new ImageDownloader();
+    final ImageDownloader mImageDownloader = new ImageDownloader();
 
     public ImageListAdapter(Context context) {
         mContext = context;
