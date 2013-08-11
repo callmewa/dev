@@ -19,13 +19,12 @@ public class ItemDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.item_detail_image, container, false);
         View frameView = inflater.inflate(R.layout.item_detail_list, container, false);
-        ImageListAdapter adapter = new ImageListAdapter(getActivity());
+        DetailImageListAdapter adapter = new DetailImageListAdapter(getActivity(), ((ItemDetailActivity)getActivity()).mEntries);
 
         ListView listView = (ListView) frameView.findViewById(android.R.id.list);
+        listView.setRotation(-90);
         listView.setAdapter(adapter);
 
-        LoadFeedData loadFeedData = new LoadFeedData(adapter);
-        loadFeedData.execute();
         return frameView;
     }
 }

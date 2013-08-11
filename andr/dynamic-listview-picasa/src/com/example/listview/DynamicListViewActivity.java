@@ -22,8 +22,8 @@ public class DynamicListViewActivity extends ListActivity {
         ImageListAdapter adapter = new ImageListAdapter(this);
         setListAdapter(adapter);
 
-        LoadFeedData loadFeedData = new LoadFeedData(adapter);
-        loadFeedData.execute();
+        LoadFeedData loadFeedData = new LoadFeedData();
+        loadFeedData.loadFeed(adapter);
 
         ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -46,7 +46,7 @@ public class DynamicListViewActivity extends ListActivity {
                 Intent intent = new Intent(DynamicListViewActivity.this, ItemDetailActivity.class);
                 String title = ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).getTitle().toString();
                 //String url = ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).getContent().getSrc();
-                String url =  ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).media$group.media$content.get(0).url;
+                String url =  ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).id.$t;
                 intent.putExtra(DynamicListViewActivity.this.getResources().getString(R.string.detail_title_key), title);
                 intent.putExtra(DynamicListViewActivity.this.getResources().getString(R.string.detail_img_url_key), url);
 

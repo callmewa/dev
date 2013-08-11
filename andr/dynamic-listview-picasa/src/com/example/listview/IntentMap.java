@@ -8,7 +8,6 @@ import java.util.Map;
  */
 public class IntentMap {
 
-    public static Map <Long, Object> SharedMap = new HashMap<Long, Object>();
-
+    public static Map <Object, Object> SharedMap = new HashMap<Object, Object>();
 
 }
