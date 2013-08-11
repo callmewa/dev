@@ -30,9 +30,9 @@ public class LoadFeedData extends AsyncTask<Void, Void, ArrayList<Entry>> {
     DefaultHttpClient client = new DefaultHttpClient();
 
     private final String mUrl =
-//            "http://picasaweb.google.com/data/feed/api/all?kind=photo&q=" +
-//                    "sunset%20landscape&alt=json&max-results=20&thumbsize=144c";
-    "https://picasaweb.google.com/data/feed/api/user/platr.upload?kind=photo&alt=json&max-results=20&thumbsize=144c";
+//            "http://picasaweb.google.com/data/feed/api/all?kind=photo&q=sunset%20landscape&alt=json&max-results=20&thumbsize=144c";
+//            "https://picasaweb.google.com/data/feed/api/user/platr.upload?kind=photo&alt=json&max-results=20&thumbsize=144c";
+            "https://picasaweb.google.com/data/feed/api/user/platr.upload?kind=album&fields=entry(id,title,summary,media:group(media:content))&alt=json";
 
     private InputStream retrieveStream(String url) {
         HttpGet httpGet = new HttpGet(url);
@@ -56,14 +56,9 @@ public class LoadFeedData extends AsyncTask<Void, Void, ArrayList<Entry>> {
 
     @Override
     protected ArrayList doInBackground(Void... params) {
-
         GoogleAuthenticator auth = new GoogleAuthenticator();
         String authToken = auth.authenticate(client);
-        String authHeader = "GoogleLogin auth=" + authToken;
-
-        Collection<Header> headers = new ArrayList<Header>();
-        headers.add(new BasicHeader("Authorization", authHeader));
-        client.getParams().setParameter(ClientPNames.DEFAULT_HEADERS, headers);
+        setAuthorizationHeader(authToken);
 
         InputStream source = retrieveStream(mUrl);
         Reader reader = null;
@@ -76,8 +71,16 @@ public class LoadFeedData extends AsyncTask<Void, Void, ArrayList<Entry>> {
         SearchResult result = gson.fromJson(reader,SearchResult.class);
         return result.getFeed().getEntry();
     }
-        protected void onPostExecute(ArrayList<Entry> entries) {
-            mAdapter.upDateEntries(entries);
+
+    private void setAuthorizationHeader(String authToken) {
+        String authHeader = "GoogleLogin auth=" + authToken;
+        Collection<Header> headers = new ArrayList<Header>();
+        headers.add(new BasicHeader("Authorization", authHeader));
+        client.getParams().setParameter(ClientPNames.DEFAULT_HEADERS, headers);
+    }
+
+    protected void onPostExecute(ArrayList<Entry> entries) {
+        mAdapter.upDateEntries(entries);
     }
 
 

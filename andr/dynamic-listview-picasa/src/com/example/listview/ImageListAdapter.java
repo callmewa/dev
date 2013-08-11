@@ -63,7 +63,8 @@ public class ImageListAdapter extends BaseAdapter{
 
         overlayText.setVisibility(View.INVISIBLE);
 
-        String imageUrl = mEntries.get(position).getContent().getSrc();
+        //String imageUrl = mEntries.get(position).getContent().getSrc();
+        String imageUrl = mEntries.get(position).media$group.media$content.get(0).url;
         mImageDownloader.download(imageUrl, imageView);
 
         //PicasaTask task = new PicasaTask(imageView);
