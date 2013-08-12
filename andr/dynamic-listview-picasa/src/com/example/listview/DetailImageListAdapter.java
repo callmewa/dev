@@ -30,7 +30,10 @@ public class DetailImageListAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mImageDownloader = ((ItemDetailActivity)mContext).mImageDownloader;
-        this.mEntries = entries;
+        if (entries!=null){
+            this.mEntries = entries;
+            notifyDataSetChanged();
+        }
     }
 
     @Override
