@@ -45,15 +45,15 @@ public class DynamicListViewActivity extends ListActivity {
 
                 Intent intent = new Intent(DynamicListViewActivity.this, ItemDetailActivity.class);
                 String title = ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).getTitle().toString();
-                //String url = ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).getContent().getSrc();
                 String url =  ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).id.$t;
                 intent.putExtra(DynamicListViewActivity.this.getResources().getString(R.string.detail_title_key), title);
-                intent.putExtra(DynamicListViewActivity.this.getResources().getString(R.string.detail_img_url_key), url);
+                intent.putExtra(DynamicListViewActivity.this.getResources().getString(R.string.detail_id_key), url);
 
+                //TODO: this is a good exercise of using weak keys but really this should be removed all together in favor of strong reference
                 WeakReference<ImageDownloader> weakDownloader = new WeakReference<ImageDownloader>(((ImageListAdapter)DynamicListViewActivity.this.getListAdapter()).mImageDownloader);
                 Long key = System.currentTimeMillis();
                 IntentMap.SharedMap.put(key, weakDownloader);
-                intent.putExtra("shared_key", key);
+                intent.putExtra(DynamicListViewActivity.this.getResources().getString(R.string.image_downloader_key), key);
                 startActivity(intent);
 
             }

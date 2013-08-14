@@ -21,11 +21,11 @@ public class ItemDetailActivity extends FragmentActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        String itemId = intent.getStringExtra(getResources().getString(R.string.detail_img_url_key));
+        String itemId = intent.getStringExtra(getResources().getString(R.string.detail_id_key));
         mEntries = (ArrayList<Entry>) IntentMap.SharedMap.get(itemId);
 
 
-        Long sharedKey = getIntent().getLongExtra("shared_key", -1);
+        Long sharedKey = getIntent().getLongExtra(getResources().getString(R.string.image_downloader_key), -1);
         Object obj = IntentMap.SharedMap.remove(sharedKey);
         mImageDownloader = ((WeakReference<ImageDownloader>)obj).get();
 //        if(obj != null){
@@ -35,8 +35,6 @@ public class ItemDetailActivity extends FragmentActivity {
 //                mImageDownloader.setMode(ImageDownloader.Mode.CORRECT);
 //            }
 //        }
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_detail);
         String itemTitle = intent.getStringExtra(getResources().getString(R.string.detail_title_key));
@@ -46,7 +44,7 @@ public class ItemDetailActivity extends FragmentActivity {
     }
     @Override
     protected void onSaveInstanceState (Bundle outState){
-        Long sharedKey = getIntent().getLongExtra("shared_key", -1);
+        Long sharedKey = getIntent().getLongExtra(getResources().getString(R.string.image_downloader_key), -1);
         IntentMap.SharedMap.put(sharedKey, new WeakReference<ImageDownloader>(mImageDownloader));
     }
 }
