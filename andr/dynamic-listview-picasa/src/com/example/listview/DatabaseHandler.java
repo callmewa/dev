@@ -4,9 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -22,18 +22,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 1;
  
     // Database Name
-    private static final String DATABASE_NAME = "contactsManager";
+    private static final String DATABASE_NAME = "platr";
  
     // Contacts table name
-    private static final String TABLE_CONTACTS = "contacts";
+    private static final String TABLE_CONTACTS = "places";
  
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
-    private static final String KEY_PH_NO = "phone_number";
+    private static final String KEY_PH = "phone";
+    private static final String KEY_ADD = "address";
+    private static final String KEY_LAT = "lat";
+    private static final String KEY_LON = "lon";
 
     public final Context context;
  
@@ -48,33 +51,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
 
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_PH_NO + " TEXT" + ")";
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_NAME + " TEXT,"
+                + KEY_ADD + " TEXT,"
+                + KEY_LAT + " REAL,"
+                + KEY_LON + " REAL,"
+                + KEY_PH + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
-
-        // Create a single InsertHelper to handle this set of insertions.
-        DatabaseUtils.InsertHelper ih = new DatabaseUtils.InsertHelper(db, TABLE_CONTACTS);
-
-        // Get the numeric indexes for each of the columns that we're updating
-        final int nameColumn = ih.getColumnIndex(KEY_NAME);
-        final int phoneColumn = ih.getColumnIndex(KEY_PH_NO);
+        //insert statement
+        SQLiteStatement insert = db.compileStatement("INSERT INTO " + TABLE_CONTACTS
+                + "(" + KEY_NAME +"," + KEY_ADD +"," + KEY_LAT +","+ KEY_LON+","+ KEY_PH +")"
+                + "VALUES (?,?,?,?,?)");
 
         AssetManager am = context.getAssets();
         try {
             InputStream is = am.open("restaurant_info.csv");
-            BufferedReader in
-                    = new BufferedReader(new InputStreamReader(is));
-            Iterable<CSVRecord> parser = CSVFormat.EXCEL.parse(in);
+            BufferedReader in = new BufferedReader(new InputStreamReader(is));
+            Iterable<CSVRecord> parser = CSVFormat.DEFAULT.withHeader().parse(in);
             for (CSVRecord record : parser) {
-                // Get the InsertHelper ready to insert a single row
-                ih.prepareForInsert();
-
-                // Add the data for each column
-                ih.bind(nameColumn, record.get(0));
-                ih.bind(phoneColumn, record.get(6));
-
-                // Insert the row into the database.
-                ih.execute();
+                insert.bindString(1, record.get(KEY_NAME));
+                insert.bindString(2, record.get(KEY_ADD));
+                insert.bindDouble(3, Double.parseDouble(record.get(KEY_LAT)));
+                insert.bindDouble(4, Double.parseDouble(record.get(KEY_LON)));
+                insert.bindString(5, record.get(KEY_PH));
+                insert.executeInsert();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,7 +101,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, contact.getName()); // Contact Name
-        values.put(KEY_PH_NO, contact.getPhoneNumber()); // Contact Phone
+        values.put(KEY_PH, contact.getPhone()); // Contact Phone
  
         // Inserting Row
         db.insert(TABLE_CONTACTS, null, values);
@@ -113,7 +113,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
  
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] { KEY_ID,
-                KEY_NAME, KEY_PH_NO }, KEY_ID + "=?",
+                KEY_NAME, KEY_PH}, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -128,7 +128,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<Contact> getAllContacts() {
         List<Contact> contactList = new ArrayList<Contact>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT " + KEY_ID +"," + KEY_NAME +"," + KEY_LAT +"," + KEY_LON +"," + KEY_PH + " FROM " + TABLE_CONTACTS;
  
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -139,7 +139,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Contact contact = new Contact();
                 contact.setID(Integer.parseInt(cursor.getString(0)));
                 contact.setName(cursor.getString(1));
-                contact.setPhoneNumber(cursor.getString(2));
+                contact.setLat(cursor.getDouble(2));
+                contact.setLon(cursor.getDouble(3));
+                contact.setPhone(cursor.getString(4));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -155,7 +157,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, contact.getName());
-        values.put(KEY_PH_NO, contact.getPhoneNumber());
+        values.put(KEY_PH, contact.getPhone());
  
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",

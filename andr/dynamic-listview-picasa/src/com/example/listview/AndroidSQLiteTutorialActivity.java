@@ -28,7 +28,7 @@ public class AndroidSQLiteTutorialActivity extends Activity {
         List<Contact> contacts = db.getAllContacts();       
          
         for (Contact cn : contacts) {
-            String log = "Id: "+cn.getID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhoneNumber();
+            String log = "Id: "+cn.getID()+", Name: " + cn.getName() + ", Lat: " + cn.getLat() +", Lon: " + cn.getLon();
                 // Writing Contacts to log
             Log.d("Name: ", log);
         }
