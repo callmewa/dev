@@ -19,4 +19,5 @@
     <string name="detail_title_key">detail.title</string>
     <string name="detail_id_key">detail.url</string>
     <string name="image_downloader_key">image.downloader.key</string>
+    <string name="instructions">The value of the spinner below should be persisted when this activity is destroyed.</string>
 </resources>
