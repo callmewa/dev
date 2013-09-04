@@ -22,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
  
     // Database Name
     private static final String DATABASE_NAME = "platr";
@@ -101,6 +101,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, contact.getName()); // Contact Name
+        values.put(KEY_ADD, contact.getAddress());
+        values.put(KEY_LAT, contact.getLat());
+        values.put(KEY_LON, contact.getLat());
         values.put(KEY_PH, contact.getPhone()); // Contact Phone
  
         // Inserting Row
@@ -128,7 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<Contact> getAllContacts() {
         List<Contact> contactList = new ArrayList<Contact>();
         // Select All Query
-        String selectQuery = "SELECT " + KEY_ID +"," + KEY_NAME +"," + KEY_LAT +"," + KEY_LON +"," + KEY_PH + " FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT " + KEY_ID +"," + KEY_NAME +"," + KEY_LAT +"," + KEY_LON +"," + KEY_PH + "," + KEY_ADD +  " FROM " + TABLE_CONTACTS;
  
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -142,6 +145,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 contact.setLat(cursor.getDouble(2));
                 contact.setLon(cursor.getDouble(3));
                 contact.setPhone(cursor.getString(4));
+                contact.setAddress(cursor.getString(5));
+
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
