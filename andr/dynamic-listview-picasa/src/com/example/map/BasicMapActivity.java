@@ -28,12 +28,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This shows how to create a simple activity with a map and a marker on the map.
@@ -50,6 +54,8 @@ public class BasicMapActivity extends FragmentActivity {
     DatabaseHandler mDb;
     List<Contact> mContacts;
     CameraUpdate cu;
+    List<Marker> markers;
+    static DecimalFormat DIST_FORMAT = new DecimalFormat("#.#");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,27 +76,49 @@ public class BasicMapActivity extends FragmentActivity {
             mMap = mMapFragment.getMap();
             mMap.setMyLocationEnabled(true);
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            if(markers == null){
+                markers = new ArrayList<Marker>();
+                for(Contact place:mContacts){
+                    Marker marker = mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(place.getLat(), place.getLon()))
+                            .title(place.getName())
+                            .snippet(place.getAddress())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    markers.add(marker);
+                    builder.include(marker.getPosition());
+                    marker.showInfoWindow();
+                }
+                LatLngBounds bounds = builder.build();
 
-            for(Contact place:mContacts){
-                Marker marker = mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(place.getLat(), place.getLon()))
-                        .title(place.getName())
-                        .snippet(place.getAddress())
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                int padding = 20; // offset from edges of the map in pixels
+                cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
 
-                builder.include(marker.getPosition());
-                marker.showInfoWindow();
+
+                boolean post = mMapFragment.getView().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mMap.animateCamera(cu);
+                    }
+                });
             }
-            LatLngBounds bounds = builder.build();
 
-            int padding = 20; // offset from edges of the map in pixels
-            cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-
-
-            boolean post = mMapFragment.getView().post(new Runnable() {
+            mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                Random rand = new Random();
                 @Override
-                public void run() {
-                    mMap.moveCamera(cu);
+                public void onCameraChange(CameraPosition cameraPosition) {
+                    double lat = cameraPosition.target.latitude;
+                    double lon = cameraPosition.target.longitude;
+                    int i = 0;
+                    for(Contact place:mContacts){
+                        double lat2 = place.getLat();
+                        double lon2 = place.getLon();
+                        double distance = hdistance(Math.toRadians(lat), Math.toRadians(lon), Math.toRadians(lat2), Math.toRadians(lon2));
+                        Marker marker = markers.get(i);
+                        marker.setSnippet(DIST_FORMAT.format(distance) + " km away");
+                        ++i;
+
+                        markers.get(rand.nextInt(markers.size())).showInfoWindow();
+                    }
                 }
             });
             //.icon(BitmapDescriptorFactory.fromResource(R.drawable.android_platform)));
@@ -103,6 +131,16 @@ public class BasicMapActivity extends FragmentActivity {
 //            });
 
         }
+    }
+
+    private double hdistance(double lat, double lon, double lat2, double lon2) {
+        double EARTH_RADIUS = 6367.45;
+        double deltaLat = lat2 - lat;
+        double deltaLon = lon2 - lon;
+
+        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) + Math.cos(lat) * Math.cos(lat2) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return EARTH_RADIUS*c;
     }
 
     /**
