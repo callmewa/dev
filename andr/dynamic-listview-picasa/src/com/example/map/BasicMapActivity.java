@@ -108,34 +108,28 @@ public class BasicMapActivity extends FragmentActivity {
                 Random rand = new Random();
                 @Override
                 public void onCameraChange(final CameraPosition cameraPosition) {
-
-                    mMapFragment.getView().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            me.setPosition(cameraPosition.target);
-                            double lat = cameraPosition.target.latitude;
-                            double lon = cameraPosition.target.longitude;
-                            int i = 0;
-                            mContacts = mDb.getContactByDist(lat, lon, 5);
-                            for(Marker marker:markers){
-                                marker.remove();
-                            }
-                            markers.clear();
-                            //add new markers within set distance
-                            for(Contact place:mContacts){
-                                double lat2 = place.getLat();
-                                double lon2 = place.getLon();
-                                double distance = hdistance(Math.toRadians(lat), Math.toRadians(lon), Math.toRadians(lat2), Math.toRadians(lon2));
-                                Marker marker = mMap.addMarker(new MarkerOptions()
-                                        .position(new LatLng(place.getLat(), place.getLon()))
-                                        .title(place.getName())
-                                        .snippet(DIST_FORMAT.format(distance) + " km away")
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                                markers.add(marker);
-                            }
-                            if(markers.size()>0) markers.get(rand.nextInt(markers.size())).showInfoWindow();
-                        }
-                    });
+                    me.setPosition(cameraPosition.target);
+                    double lat = cameraPosition.target.latitude;
+                    double lon = cameraPosition.target.longitude;
+                    int i = 0;
+                    mContacts = mDb.getContactByDist(lat, lon, 5);
+                    for(Marker marker:markers){
+                        marker.remove();
+                    }
+                    markers.clear();
+                    //add new markers within set distance
+                    for(Contact place:mContacts){
+                        double lat2 = place.getLat();
+                        double lon2 = place.getLon();
+                        double distance = hdistance(Math.toRadians(lat), Math.toRadians(lon), Math.toRadians(lat2), Math.toRadians(lon2));
+                        Marker marker = mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(place.getLat(), place.getLon()))
+                                .title(place.getName())
+                                .snippet(DIST_FORMAT.format(distance) + " km away")
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                        markers.add(marker);
+                    }
+                    if(markers.size()>0) markers.get(rand.nextInt(markers.size())).showInfoWindow();
                 }
             });
             //.icon(BitmapDescriptorFactory.fromResource(R.drawable.android_platform)));
@@ -151,7 +145,7 @@ public class BasicMapActivity extends FragmentActivity {
     }
 
     private double hdistance(double lat, double lon, double lat2, double lon2) {
-        double EARTH_RADIUS = 6367.45;
+        double EARTH_RADIUS = 6367.45;  //km
         double deltaLat = lat2 - lat;
         double deltaLon = lon2 - lon;
 
