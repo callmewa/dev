@@ -55,6 +55,7 @@ public class BasicMapActivity extends FragmentActivity {
     List<Contact> mContacts;
     CameraUpdate cu;
     List<Marker> markers;
+    Marker me;
     static DecimalFormat DIST_FORMAT = new DecimalFormat("#.#");
 
     @Override
@@ -86,10 +87,8 @@ public class BasicMapActivity extends FragmentActivity {
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                     markers.add(marker);
                     builder.include(marker.getPosition());
-                    marker.showInfoWindow();
                 }
                 LatLngBounds bounds = builder.build();
-
                 int padding = 20; // offset from edges of the map in pixels
                 cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
 
@@ -98,6 +97,9 @@ public class BasicMapActivity extends FragmentActivity {
                     @Override
                     public void run() {
                         mMap.animateCamera(cu);
+                        me = mMap.addMarker(new MarkerOptions()
+                                .position(mMap.getCameraPosition().target)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
                     }
                 });
             }
@@ -105,20 +107,35 @@ public class BasicMapActivity extends FragmentActivity {
             mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                 Random rand = new Random();
                 @Override
-                public void onCameraChange(CameraPosition cameraPosition) {
-                    double lat = cameraPosition.target.latitude;
-                    double lon = cameraPosition.target.longitude;
-                    int i = 0;
-                    for(Contact place:mContacts){
-                        double lat2 = place.getLat();
-                        double lon2 = place.getLon();
-                        double distance = hdistance(Math.toRadians(lat), Math.toRadians(lon), Math.toRadians(lat2), Math.toRadians(lon2));
-                        Marker marker = markers.get(i);
-                        marker.setSnippet(DIST_FORMAT.format(distance) + " km away");
-                        ++i;
+                public void onCameraChange(final CameraPosition cameraPosition) {
 
-                        markers.get(rand.nextInt(markers.size())).showInfoWindow();
-                    }
+                    mMapFragment.getView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            me.setPosition(cameraPosition.target);
+                            double lat = cameraPosition.target.latitude;
+                            double lon = cameraPosition.target.longitude;
+                            int i = 0;
+                            mContacts = mDb.getContactByDist(lat, lon, 5);
+                            for(Marker marker:markers){
+                                marker.remove();
+                            }
+                            markers.clear();
+                            //add new markers within set distance
+                            for(Contact place:mContacts){
+                                double lat2 = place.getLat();
+                                double lon2 = place.getLon();
+                                double distance = hdistance(Math.toRadians(lat), Math.toRadians(lon), Math.toRadians(lat2), Math.toRadians(lon2));
+                                Marker marker = mMap.addMarker(new MarkerOptions()
+                                        .position(new LatLng(place.getLat(), place.getLon()))
+                                        .title(place.getName())
+                                        .snippet(DIST_FORMAT.format(distance) + " km away")
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                                markers.add(marker);
+                            }
+                            if(markers.size()>0) markers.get(rand.nextInt(markers.size())).showInfoWindow();
+                        }
+                    });
                 }
             });
             //.icon(BitmapDescriptorFactory.fromResource(R.drawable.android_platform)));

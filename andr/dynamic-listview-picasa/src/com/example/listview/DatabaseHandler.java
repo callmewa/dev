@@ -155,6 +155,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return contact list
         return contactList;
     }
+
+    public List<Contact> getContactByDist(double lat, double lon, double dist){
+        Contact.Bounds bounds = new Contact.Bounds();
+        bounds.calcBounds(lat, lon, dist);
+
+        List<Contact> contactList = new ArrayList<Contact>();
+        String query = "SELECT " + KEY_ID +"," + KEY_NAME +"," + KEY_LAT +"," + KEY_LON +"," + KEY_PH + "," + KEY_ADD
+                + " FROM " + TABLE_CONTACTS
+                + " WHERE " + KEY_LAT + " BETWEEN " +  bounds.lat1 + " AND " + bounds.lat2
+                + " AND " + KEY_LON + " BETWEEN " +  bounds.lon1 + " AND " + bounds.lon2;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Contact contact = new Contact();
+                contact.setID(Integer.parseInt(cursor.getString(0)));
+                contact.setName(cursor.getString(1));
+                contact.setLat(cursor.getDouble(2));
+                contact.setLon(cursor.getDouble(3));
+                contact.setPhone(cursor.getString(4));
+                contact.setAddress(cursor.getString(5));
+
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return contactList;
+    }
  
     // Updating single contact
     public int updateContact(Contact contact) {

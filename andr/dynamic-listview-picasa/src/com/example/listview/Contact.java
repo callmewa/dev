@@ -1,6 +1,23 @@
 package com.example.listview;
 
 public class Contact {
+
+    public static class Bounds {
+        static final double LatKm = 111.2;
+
+        public double lat1;
+        public double lat2;
+        public double lon1;
+        public double lon2;
+
+        public Bounds calcBounds(double lat, double lon, double dist){
+            lat1 = lat - dist/LatKm;
+            lat2 = lat + dist/LatKm;
+            lon1 = lon - dist/Math.abs(Math.cos(Math.toRadians(lat))*LatKm);
+            lon2 = lon + dist/Math.abs(Math.cos(Math.toRadians(lat))*LatKm);
+            return this;
+        }
+    }
      
     //private variables
     int _id;
