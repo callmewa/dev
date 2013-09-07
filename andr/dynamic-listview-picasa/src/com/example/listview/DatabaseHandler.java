@@ -37,6 +37,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_ADD = "address";
     private static final String KEY_LAT = "lat";
     private static final String KEY_LON = "lon";
+    private static final String KEY_DIST = "distance";
 
     public final Context context;
  
@@ -162,9 +163,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         List<Contact> contactList = new ArrayList<Contact>();
         String query = "SELECT " + KEY_ID +"," + KEY_NAME +"," + KEY_LAT +"," + KEY_LON +"," + KEY_PH + "," + KEY_ADD
+                + "," + "("+ KEY_LAT + " - " + lat + ")" + "*" + "("+ KEY_LAT + " - " + lat + ")"
+                + "+ ("+ KEY_LON + " - " + lon + ")" + "*" + "("+ KEY_LON + " - " + lon + ")" + " as " + KEY_DIST
                 + " FROM " + TABLE_CONTACTS
                 + " WHERE " + KEY_LAT + " BETWEEN " +  bounds.lat1 + " AND " + bounds.lat2
-                + " AND " + KEY_LON + " BETWEEN " +  bounds.lon1 + " AND " + bounds.lon2;
+                + " AND " + KEY_LON + " BETWEEN " +  bounds.lon1 + " AND " + bounds.lon2
+                + " ORDER BY " + KEY_DIST;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -178,6 +182,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 contact.setLon(cursor.getDouble(3));
                 contact.setPhone(cursor.getString(4));
                 contact.setAddress(cursor.getString(5));
+                contact.setDist(cursor.getDouble(6));
 
                 // Adding contact to list
                 contactList.add(contact);

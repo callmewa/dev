@@ -76,6 +76,7 @@ public class BasicMapActivity extends FragmentActivity {
         if (mMapFragment != null) {
             mMap = mMapFragment.getMap();
             mMap.setMyLocationEnabled(true);
+            mMap.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             if(markers == null){
                 markers = new ArrayList<Marker>();
@@ -104,6 +105,19 @@ public class BasicMapActivity extends FragmentActivity {
                 });
             }
 
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    int index =  markers.indexOf(marker);
+                    if (index >= 0){
+                        marker.setSnippet(mContacts.get(index).getAddress());
+                        marker.showInfoWindow();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
             mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                 Random rand = new Random();
                 @Override
@@ -129,7 +143,7 @@ public class BasicMapActivity extends FragmentActivity {
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                         markers.add(marker);
                     }
-                    if(markers.size()>0) markers.get(rand.nextInt(markers.size())).showInfoWindow();
+                    if(markers.size()>0) markers.get(0).showInfoWindow();
                 }
             });
             //.icon(BitmapDescriptorFactory.fromResource(R.drawable.android_platform)));

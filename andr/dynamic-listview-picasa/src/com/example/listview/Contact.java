@@ -26,6 +26,7 @@ public class Contact {
     Double lat;
     Double lon;
     String address;
+    Double dist;
 
 
     public Contact(int _id, String name, Double lat, Double lon, String address, String phone) {
@@ -106,5 +107,13 @@ public class Contact {
     // setting phone number
     public void setPhone(String phone_number){
         this.phone = phone_number;
+    }
+
+    public Double getDist() {
+        return dist;
+    }
+
+    public void setDist(Double dist) {
+        this.dist = dist;
     }
 }
