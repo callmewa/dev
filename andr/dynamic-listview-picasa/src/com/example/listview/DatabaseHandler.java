@@ -141,7 +141,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Contact contact = new Contact();
-                contact.setID(Integer.parseInt(cursor.getString(0)));
+                contact.setId(Integer.parseInt(cursor.getString(0)));
                 contact.setName(cursor.getString(1));
                 contact.setLat(cursor.getDouble(2));
                 contact.setLon(cursor.getDouble(3));
@@ -176,7 +176,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Contact contact = new Contact();
-                contact.setID(cursor.getInt(0));
+                contact.setId(cursor.getInt(0));
                 contact.setName(cursor.getString(1));
                 contact.setLat(cursor.getDouble(2));
                 contact.setLon(cursor.getDouble(3));
@@ -203,14 +203,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+                new String[] { String.valueOf(contact.getId()) });
     }
  
     // Deleting single contact
     public void deleteContact(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+                new String[] { String.valueOf(contact.getId()) });
         db.close();
     }
  

@@ -80,12 +80,12 @@ public class Contact {
         this.phone = phone;
     }
     // getting ID
-    public int getID(){
+    public int getId(){
         return this._id;
     }
      
     // setting id
-    public void setID(int id){
+    public void setId(int id){
         this._id = id;
     }
      
