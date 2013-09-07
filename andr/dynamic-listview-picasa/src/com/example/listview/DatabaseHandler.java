@@ -176,7 +176,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Contact contact = new Contact();
-                contact.setID(Integer.parseInt(cursor.getString(0)));
+                contact.setID(cursor.getInt(0));
                 contact.setName(cursor.getString(1));
                 contact.setLat(cursor.getDouble(2));
                 contact.setLon(cursor.getDouble(3));

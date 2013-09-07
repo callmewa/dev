@@ -16,8 +16,13 @@
 
 package com.example.map;
 
+import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 
 import com.example.listview.Contact;
 import com.example.listview.DatabaseHandler;
@@ -26,6 +31,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -90,8 +96,7 @@ public class BasicMapActivity extends FragmentActivity {
                     builder.include(marker.getPosition());
                 }
                 LatLngBounds bounds = builder.build();
-                int padding = 20; // offset from edges of the map in pixels
-                cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                cu = CameraUpdateFactory.newLatLngBounds(bounds, 20);
 
 
                 boolean post = mMapFragment.getView().post(new Runnable() {
@@ -147,15 +152,44 @@ public class BasicMapActivity extends FragmentActivity {
                 }
             });
             //.icon(BitmapDescriptorFactory.fromResource(R.drawable.android_platform)));
-//            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//                @Override
-//                public boolean onMarkerClick(Marker marker) {
-//                    marker.setTitle("sf");
-//                    return false;
-//                }
-//            });
-
         }
+    }
+
+    public void animateMarker(final Marker marker, final LatLng toPosition,
+                              final boolean hideMarker) {
+        final Handler handler = new Handler();
+        final long start = SystemClock.uptimeMillis();
+        Projection proj = mMap.getProjection();
+        Point startPoint = proj.toScreenLocation(marker.getPosition());
+        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
+        final long duration = 500;
+
+        final Interpolator interpolator = new LinearInterpolator();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - start;
+                float t = interpolator.getInterpolation((float) elapsed
+                        / duration);
+                double lng = t * toPosition.longitude + (1 - t)
+                        * startLatLng.longitude;
+                double lat = t * toPosition.latitude + (1 - t)
+                        * startLatLng.latitude;
+                marker.setPosition(new LatLng(lat, lng));
+
+                if (t < 1.0) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 16);
+                } else {
+                    if (hideMarker) {
+                        marker.setVisible(false);
+                    } else {
+                        marker.setVisible(true);
+                    }
+                }
+            }
+        });
     }
 
     private double hdistance(double lat, double lon, double lat2, double lon2) {
