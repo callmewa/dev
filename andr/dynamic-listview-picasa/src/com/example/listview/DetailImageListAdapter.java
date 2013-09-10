@@ -72,7 +72,7 @@ public class DetailImageListAdapter extends BaseAdapter {
 //        titleText.setText(title);
 //        String description = mEntries.get(position).getSummary().toString();
 //        descriptionText.setText(description);
-        itemView.setRotation(90);
+        //itemView.setRotation(90);
         return itemView;
     }
 

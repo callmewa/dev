@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.feed.LoadFeedData;
 import com.google.picasa.model.Entry;
 
 import java.lang.ref.WeakReference;
@@ -43,7 +44,7 @@ public class DynamicListViewActivity extends ListActivity {
                         .setDuration(500)
                         .setListener(null);
 
-                Intent intent = new Intent(DynamicListViewActivity.this, ItemDetailActivity.class);
+                Intent intent = new Intent(DynamicListViewActivity.this, ScreenSlideActivity.class);
                 String title = ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).getTitle().toString();
                 String url =  ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).id.$t;
                 intent.putExtra(DynamicListViewActivity.this.getResources().getString(R.string.detail_title_key), title);

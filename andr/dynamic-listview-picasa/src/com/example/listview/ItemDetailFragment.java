@@ -22,7 +22,7 @@ public class ItemDetailFragment extends Fragment {
         DetailImageListAdapter adapter = new DetailImageListAdapter(getActivity(), ((ItemDetailActivity)getActivity()).mEntries);
 
         ListView listView = (ListView) frameView.findViewById(android.R.id.list);
-        listView.setRotation(-90);
+        //listView.setRotation(-90);
         listView.setAdapter(adapter);
 
         return frameView;

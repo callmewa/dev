@@ -1,7 +1,9 @@
-package com.example.listview;
+package com.example.feed;
 
 import android.os.AsyncTask;
 
+import com.example.listview.ImageListAdapter;
+import com.example.listview.IntentMap;
 import com.google.auth.GoogleAuthenticator;
 import com.google.gson.Gson;
 import com.google.picasa.model.Entry;
@@ -103,7 +105,7 @@ public class LoadFeedData {
 
     public class LoadAlbum extends AsyncTask<Void, Void, ArrayList<Entry>> {
 
-        private final String albumUrlParams = "?fields=entry(id,title,summary,content)&alt=json&max-results=20";
+        private final String albumUrlParams = "?fields=entry(id,title,summary,content)&imgmax=u1280&alt=json&max-results=20";
 
         private final ImageListAdapter mAdapter;
         private List<Entry> albumEntries;

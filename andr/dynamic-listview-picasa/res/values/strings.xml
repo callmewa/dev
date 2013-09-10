@@ -14,10 +14,17 @@
   limitations under the License.
   -->
 
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Dynamic ListView Demo</string>
     <string name="detail_title_key">detail.title</string>
     <string name="detail_id_key">detail.url</string>
     <string name="image_downloader_key">image.downloader.key</string>
     <string name="instructions">The value of the spinner below should be persisted when this activity is destroyed.</string>
+
+    <string name="title_screen_slide">Screen Slide</string>
+    <string name="title_template_step">Step <xliff:g id="step_number">%1$d</xliff:g>: Lorem
+        Ipsum</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_next">Next</string>
+    <string name="action_finish">Finish</string>
 </resources>
