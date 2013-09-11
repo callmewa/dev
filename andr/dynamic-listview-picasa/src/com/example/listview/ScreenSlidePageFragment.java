@@ -17,6 +17,7 @@
 package com.example.listview;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.feed.ImageDownloader;
+import com.example.map.BasicMapActivity;
 import com.google.picasa.model.Entry;
 
 /**
@@ -67,6 +69,15 @@ public class ScreenSlidePageFragment extends Fragment {
 
         String imageUrl = mEntry.getContent().getSrc();
         mImageDownloader.download(imageUrl, imageView);
+
+        //TODO: remove after adding map button
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), BasicMapActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
