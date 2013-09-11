@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.listview;
+package com.example.misc;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -24,6 +24,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.example.listview.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

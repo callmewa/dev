@@ -1,4 +1,4 @@
-package com.example.listview;
+package com.example.misc;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.example.listview.ImageDownloader;
+import com.example.listview.R;
 import com.google.picasa.model.Entry;
 
 import java.util.ArrayList;

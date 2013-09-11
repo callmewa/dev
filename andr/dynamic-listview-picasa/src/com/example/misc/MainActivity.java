@@ -1,4 +1,4 @@
-package com.example.listview;
+package com.example.misc;
 
 import android.app.Dialog;
 import android.content.IntentSender;
@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
+import com.example.listview.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;

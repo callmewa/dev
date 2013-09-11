@@ -1,7 +1,9 @@
-package com.example.listview;
+package com.example.misc;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.example.listview.R;
 
 /**
  * Created by callmewa on 8/4/13.

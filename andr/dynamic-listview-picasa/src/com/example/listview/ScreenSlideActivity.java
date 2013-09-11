@@ -18,7 +18,6 @@ package com.example.listview;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
@@ -29,10 +28,11 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.misc.MainActivity;
 import com.google.picasa.model.Entry;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Demonstrates a "screen-slide" animation using a {@link android.support.v4.view.ViewPager}. Because {@link android.support.v4.view.ViewPager}
@@ -47,11 +47,6 @@ import java.util.ArrayList;
  */
 public class ScreenSlideActivity extends FragmentActivity {
     /**
-     * The number of pages (wizard steps) to show in this demo.
-     */
-    private static final int NUM_PAGES = 5;
-
-    /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
      */
@@ -62,7 +57,7 @@ public class ScreenSlideActivity extends FragmentActivity {
      */
     private PagerAdapter mPagerAdapter;
     ImageDownloader mImageDownloader = null;
-    ArrayList <Entry> mEntries;
+    List<Entry> mEntries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +66,13 @@ public class ScreenSlideActivity extends FragmentActivity {
 
         Intent intent = getIntent();
         String itemId = intent.getStringExtra(getResources().getString(R.string.detail_id_key));
-        mEntries = (ArrayList<Entry>) IntentMap.SharedMap.get(itemId);
+        mEntries = (List<Entry>) IntentMap.SharedMap.get(itemId);
 
-
-        Long sharedKey = getIntent().getLongExtra(getResources().getString(R.string.image_downloader_key), -1);
-        Object obj = IntentMap.SharedMap.remove(sharedKey);
-        mImageDownloader = ((WeakReference<ImageDownloader>)obj).get();
+        mImageDownloader = IntentMap.IMAGE_DOWNLOADER;
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ImageSlidePagerAdapter(this, mEntries, getFragmentManager());
+        mPagerAdapter = new ImageSlidePagerAdapter(mEntries, getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -92,12 +84,6 @@ public class ScreenSlideActivity extends FragmentActivity {
                 invalidateOptionsMenu();
             }
         });
-    }
-
-    @Override
-    protected void onSaveInstanceState (Bundle outState){
-        Long sharedKey = getIntent().getLongExtra(getResources().getString(R.string.image_downloader_key), -1);
-        IntentMap.SharedMap.put(sharedKey, new WeakReference<ImageDownloader>(mImageDownloader));
     }
 
     @Override
@@ -145,17 +131,13 @@ public class ScreenSlideActivity extends FragmentActivity {
 
 
     private class ImageSlidePagerAdapter extends  FragmentStatePagerAdapter{
-        private Context mContext;
-
-        private ArrayList<Entry> mEntries = new ArrayList<Entry>();
+        private List<Entry> mEntries = new ArrayList<Entry>();
 
         final ImageDownloader mImageDownloader;
 
-        public ImageSlidePagerAdapter(Context context, ArrayList<Entry> entries, FragmentManager fm) {
+        public ImageSlidePagerAdapter(List<Entry> entries, FragmentManager fm) {
             super(fm);
-            mContext = context;
-
-            mImageDownloader = ((ScreenSlideActivity)mContext).mImageDownloader;
+            mImageDownloader = IntentMap.IMAGE_DOWNLOADER;
             if (entries!=null){
                 this.mEntries = entries;
                 notifyDataSetChanged();
@@ -171,6 +153,5 @@ public class ScreenSlideActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             return ScreenSlidePageFragment.create(mEntries.get(position), mImageDownloader);
         }
-
     }
 }

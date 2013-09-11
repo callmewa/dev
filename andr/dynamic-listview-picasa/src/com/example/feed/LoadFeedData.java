@@ -68,7 +68,7 @@ public class LoadFeedData {
 
 
 
-    public class LoadFeed extends AsyncTask<Void, Void, ArrayList<Entry>> {
+    public class LoadFeed extends AsyncTask<Void, Void, List<Entry>> {
 
         private final String mUrl = "https://picasaweb.google.com/data/feed/api/user/platr.upload" +
                 "?kind=album&fields=entry(id,title,summary,media:group(media:content))&alt=json";
@@ -80,7 +80,7 @@ public class LoadFeedData {
         }
 
         @Override
-        protected ArrayList<Entry> doInBackground(Void... params) {
+        protected List<Entry> doInBackground(Void... params) {
             GoogleAuthenticator auth = new GoogleAuthenticator();
             authToken = auth.authenticate(client);
             setAuthorizationHeader(authToken);
@@ -97,13 +97,13 @@ public class LoadFeedData {
             return result.getFeed().getEntry();
         }
 
-        protected void onPostExecute(ArrayList<Entry> entries) {
+        protected void onPostExecute(List<Entry> entries) {
             mAdapter.upDateEntries(entries);
             loadAlbum(entries);
         }
     }
 
-    public class LoadAlbum extends AsyncTask<Void, Void, ArrayList<Entry>> {
+    public class LoadAlbum extends AsyncTask<Void, Void, List<Entry>> {
 
         private final String albumUrlParams = "?fields=entry(id,title,summary,content)&imgmax=u1280&alt=json&max-results=20";
 
@@ -116,7 +116,7 @@ public class LoadFeedData {
         }
 
         @Override
-        protected ArrayList<Entry> doInBackground(Void... params) {
+        protected List<Entry> doInBackground(Void... params) {
             for (Entry albumEntry: albumEntries){
                 String albumUrl = albumEntry.getId().$t.split("\\?")[0].replace("/entry/", "/feed/");
                 albumUrl+=albumUrlParams;
@@ -128,7 +128,7 @@ public class LoadFeedData {
                 }
                 Gson gson = new Gson();
                 SearchResult result = gson.fromJson(reader,SearchResult.class);
-                ArrayList<Entry> entries = result.feed.entry;
+                List<Entry> entries = result.feed.entry;
                 IntentMap.SharedMap.put(albumEntry.id.$t, entries);
             }
             return null;

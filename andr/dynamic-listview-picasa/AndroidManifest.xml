@@ -53,8 +53,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.listview.ItemDetailActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
         <activity android:name=".ScreenSlideActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:label="@string/title_screen_slide"

@@ -1,8 +1,12 @@
-package com.example.listview;
+package com.example.misc;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.example.listview.Contact;
+import com.example.listview.DatabaseHandler;
+import com.example.listview.R;
 
 import java.util.List;
  
@@ -25,7 +29,7 @@ public class AndroidSQLiteTutorialActivity extends Activity {
          
         // Reading all contacts
         Log.d("Reading: ", "Reading all contacts.."); 
-        List<Contact> contacts = db.getAllContacts();       
+        List<Contact> contacts = db.getAllContacts();
          
         for (Contact cn : contacts) {
             String log = "Id: "+cn.getId()+", Name: " + cn.getName() + ", Lat: " + cn.getLat() +", Lon: " + cn.getLon();

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.picasa.model.Entry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by callmewa on 8/2/13.
@@ -21,9 +22,9 @@ public class ImageListAdapter extends BaseAdapter{
 
     private LayoutInflater mLayoutInflater;
 
-    private ArrayList<Entry> mEntries = new ArrayList<Entry>();
+    private List<Entry> mEntries = new ArrayList<Entry>();
 
-    final ImageDownloader mImageDownloader = new ImageDownloader();
+    final ImageDownloader mImageDownloader = IntentMap.IMAGE_DOWNLOADER;
 
     public ImageListAdapter(Context context) {
         mContext = context;
@@ -59,16 +60,11 @@ public class ImageListAdapter extends BaseAdapter{
         ImageView imageView = (ImageView) itemView.findViewById(R.id.listImage);
         TextView titleText = (TextView) itemView.findViewById(R.id.listTitle);
         TextView descriptionText = (TextView) itemView.findViewById(R.id.listDescription);
-        TextView overlayText = (TextView) itemView.findViewById(R.id.textOverlay);
-
-        overlayText.setVisibility(View.INVISIBLE);
+        //TextView overlayText = (TextView) itemView.findViewById(R.id.textOverlay);
 
         //String imageUrl = mEntries.get(position).getContent().getSrc();
         String imageUrl = mEntries.get(position).media$group.media$content.get(0).url;
         mImageDownloader.download(imageUrl, imageView);
-
-        //PicasaTask task = new PicasaTask(imageView);
-        //task.execute(imageUrl);
 
         String title = mEntries.get(position).getTitle().toString();
         titleText.setText(title);
@@ -77,7 +73,7 @@ public class ImageListAdapter extends BaseAdapter{
         return itemView;
     }
 
-    public void upDateEntries(ArrayList<Entry> entries) {
+    public void upDateEntries(List<Entry> entries) {
         mEntries = entries;
         notifyDataSetChanged();
     }

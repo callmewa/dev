@@ -1,4 +1,4 @@
-package com.example.listview;
+package com.example.misc;
 
 
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.example.listview.R;
 
 /**
  * Created by callmewa on 8/5/13.

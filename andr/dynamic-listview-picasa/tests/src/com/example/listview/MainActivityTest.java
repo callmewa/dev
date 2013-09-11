@@ -20,6 +20,8 @@ import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Spinner;
 
+import com.example.misc.SpinnerActivity;
+
 /**
  * This is a simple framework for a test of an Application.  See
  * {@link android.test.ApplicationTestCase ApplicationTestCase} for more information on

@@ -1,10 +1,13 @@
-package com.example.listview;
+package com.example.misc;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
 
+import com.example.listview.ImageDownloader;
+import com.example.listview.IntentMap;
+import com.example.listview.R;
 import com.google.picasa.model.Entry;
 
 import java.lang.ref.WeakReference;
