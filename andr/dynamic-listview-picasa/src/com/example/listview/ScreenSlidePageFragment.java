@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.core.IntentMap;
 import com.example.feed.ImageDownloader;
 import com.example.map.BasicMapActivity;
 import com.google.picasa.model.Entry;
@@ -37,24 +38,37 @@ import com.google.picasa.model.Entry;
  */
 public class ScreenSlidePageFragment extends Fragment {
     private Entry mEntry;
-    final ImageDownloader mImageDownloader;
+    final ImageDownloader mImageDownloader = IntentMap.IMAGE_DOWNLOADER;
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
      */
-    public static ScreenSlidePageFragment create(Entry entry, ImageDownloader imageDownloader) {
-        ScreenSlidePageFragment fragment = new ScreenSlidePageFragment(entry, imageDownloader);
-
+    public static ScreenSlidePageFragment create(Entry entry) {
+        ScreenSlidePageFragment fragment = new ScreenSlidePageFragment(entry);
         return fragment;
     }
 
-    public ScreenSlidePageFragment(Entry entry, ImageDownloader imageDownloader) {
+    public ScreenSlidePageFragment() {
+    }
+
+    public ScreenSlidePageFragment(Entry entry) {
         mEntry = entry;
-        mImageDownloader = imageDownloader;
+    }
+
+
+
+    @Override
+    public void onSaveInstanceState (Bundle outState){
+        outState.putString(getResources().getString(R.string.entry_id_key), mEntry.getId().$t);
+        IntentMap.SharedMap.put(mEntry.getId().$t, mEntry);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        if(savedInstanceState!=null){
+            String key = savedInstanceState.getString(getResources().getString(R.string.entry_id_key));
+            mEntry = (Entry) IntentMap.SharedMap.remove(key);
+        }
         super.onCreate(savedInstanceState);
     }
 

@@ -152,7 +152,7 @@ public class ScreenSlideActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return ScreenSlidePageFragment.create(mEntries.get(position), mImageDownloader);
+            return ScreenSlidePageFragment.create(mEntries.get(position));
         }
     }
 }
