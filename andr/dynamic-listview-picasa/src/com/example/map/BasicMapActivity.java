@@ -24,8 +24,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
-import com.example.listview.Contact;
-import com.example.listview.DatabaseHandler;
+import com.example.db.Contact;
+import com.example.db.DatabaseHandler;
 import com.example.listview.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -68,7 +68,7 @@ public class BasicMapActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.basic_demo);
+        setContentView(R.layout.map);
 
         mDb = new DatabaseHandler(this);
         init();

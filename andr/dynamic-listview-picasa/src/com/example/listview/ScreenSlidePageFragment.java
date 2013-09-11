@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.feed.ImageDownloader;
 import com.google.picasa.model.Entry;
 
 /**

@@ -1,4 +1,6 @@
-package com.example.listview;
+package com.example.core;
+
+import com.example.feed.ImageDownloader;
 
 import java.util.HashMap;
 import java.util.Map;

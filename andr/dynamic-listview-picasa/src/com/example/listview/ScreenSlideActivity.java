@@ -28,7 +28,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.misc.MainActivity;
+import com.example.core.IntentMap;
+import com.example.feed.ImageDownloader;
 import com.google.picasa.model.Entry;
 
 import java.util.ArrayList;
@@ -109,7 +110,7 @@ public class ScreenSlideActivity extends FragmentActivity {
             case android.R.id.home:
                 // Navigate "up" the demo structure to the launchpad activity.
                 // See http://developer.android.com/design/patterns/navigation.html for more.
-                NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
+                NavUtils.navigateUpTo(this, new Intent(this, DynamicListViewActivity.class));
                 return true;
 
             case R.id.action_previous:

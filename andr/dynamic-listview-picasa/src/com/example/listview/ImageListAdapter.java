@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.core.IntentMap;
+import com.example.feed.ImageDownloader;
 import com.google.picasa.model.Entry;
 
 import java.util.ArrayList;

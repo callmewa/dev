@@ -3,7 +3,7 @@ package com.example.feed;
 import android.os.AsyncTask;
 
 import com.example.listview.ImageListAdapter;
-import com.example.listview.IntentMap;
+import com.example.core.IntentMap;
 import com.google.auth.GoogleAuthenticator;
 import com.google.gson.Gson;
 import com.google.picasa.model.Entry;

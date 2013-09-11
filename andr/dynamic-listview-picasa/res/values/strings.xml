@@ -15,7 +15,7 @@
   -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Dynamic ListView Demo</string>
+    <string name="app_name">Demo</string>
     <string name="detail_title_key">detail.title</string>
     <string name="detail_id_key">detail.url</string>
     <string name="image_downloader_key">image.downloader.key</string>

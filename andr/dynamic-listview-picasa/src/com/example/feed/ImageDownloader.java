@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.listview;
+package com.example.feed;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
