@@ -22,6 +22,10 @@
     <string name="image_downloader_key">image.downloader.key</string>
     <string name="instructions">The value of the spinner below should be persisted when this activity is destroyed.</string>
 
+    <!--fragement_slide-->
+    <string name="btn_map_label">map</string>
+
+
     <string name="title_screen_slide">Screen Slide</string>
     <string name="title_template_step">Step <xliff:g id="step_number">%1$d</xliff:g>: Lorem
         Ipsum</string>

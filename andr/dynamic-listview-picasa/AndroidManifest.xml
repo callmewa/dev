@@ -47,7 +47,8 @@
         android:theme="@style/AppTheme">
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
                    android:value="AIzaSyC3aazNo4BBH4sQL7M09RVkMONv1ZkRIBc"/>
-        <activity android:name=".DynamicListViewActivity" android:label="@string/app_name">
+        <activity android:name=".DynamicListViewActivity" android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

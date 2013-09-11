@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.core.IntentMap;
@@ -80,12 +81,22 @@ public class ScreenSlidePageFragment extends Fragment {
                 .inflate(R.layout.fragment_screen_slide_page, container, false);
 
         ImageView imageView = (ImageView) rootView.findViewById(R.id.listImage);
+        final Button btnMap = (Button) rootView.findViewById(R.id.btnMap);
 
         String imageUrl = mEntry.getContent().getSrc();
         mImageDownloader.download(imageUrl, imageView);
 
         //TODO: remove after adding map button
-        imageView.setOnClickListener(new View.OnClickListener() {
+
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                btnMap.setVisibility(View.VISIBLE);
+                return true;
+            }
+        });
+
+        btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), BasicMapActivity.class);

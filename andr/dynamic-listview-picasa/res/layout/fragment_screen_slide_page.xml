@@ -27,5 +27,15 @@
             android:adjustViewBounds="true"
             android:layout_gravity="center"/>
 
+        <Button
+            android:background="@drawable/red_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_map_label"
+            android:id="@+id/btnMap"
+            android:layout_gravity="center|bottom"
+            android:visibility="gone"
+        />
+
     </FrameLayout>
 

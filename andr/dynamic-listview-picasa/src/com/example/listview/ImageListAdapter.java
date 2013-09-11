@@ -61,7 +61,7 @@ public class ImageListAdapter extends BaseAdapter{
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.listImage);
         TextView titleText = (TextView) itemView.findViewById(R.id.listTitle);
-        TextView descriptionText = (TextView) itemView.findViewById(R.id.listDescription);
+        //TextView descriptionText = (TextView) itemView.findViewById(R.id.listDescription);
         //TextView overlayText = (TextView) itemView.findViewById(R.id.textOverlay);
 
         //String imageUrl = mEntries.get(position).getContent().getSrc();
@@ -70,8 +70,8 @@ public class ImageListAdapter extends BaseAdapter{
 
         String title = mEntries.get(position).getTitle().toString();
         titleText.setText(title);
-        String description = mEntries.get(position).getSummary().toString();
-        descriptionText.setText(description);
+        //String description = mEntries.get(position).getSummary().toString();
+        //descriptionText.setText(description);
         return itemView;
     }
 
