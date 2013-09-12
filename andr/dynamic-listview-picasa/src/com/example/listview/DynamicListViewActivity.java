@@ -33,8 +33,8 @@ public class DynamicListViewActivity extends ListActivity {
                 Intent intent = new Intent(DynamicListViewActivity.this, ScreenSlideActivity.class);
                 String title = ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).getTitle().toString();
                 String url =  ((Entry)DynamicListViewActivity.this.getListAdapter().getItem(position)).id.$t;
-                intent.putExtra(DynamicListViewActivity.this.getResources().getString(R.string.detail_title_key), title);
-                intent.putExtra(DynamicListViewActivity.this.getResources().getString(R.string.detail_id_key), url);
+                intent.putExtra(getString(R.string.detail_title_key), title);
+                intent.putExtra(getString(R.string.detail_id_key), url);
                 startActivity(intent);
             }
         });

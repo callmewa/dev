@@ -66,7 +66,7 @@ public class ScreenSlideActivity extends FragmentActivity {
         setContentView(R.layout.activity_screen_slide);
 
         Intent intent = getIntent();
-        String itemId = intent.getStringExtra(getResources().getString(R.string.detail_id_key));
+        String itemId = intent.getStringExtra(getString(R.string.detail_id_key));
         mEntries = (List<Entry>) IntentMap.SHARED_MAP.get(itemId);
 
         mImageDownloader = IntentMap.IMAGE_DOWNLOADER;
