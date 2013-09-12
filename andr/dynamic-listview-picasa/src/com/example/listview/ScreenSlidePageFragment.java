@@ -81,7 +81,7 @@ public class ScreenSlidePageFragment extends Fragment {
                 .inflate(R.layout.fragment_screen_slide_page, container, false);
 
         ImageView imageView = (ImageView) rootView.findViewById(R.id.listImage);
-        final Button btnMap = (Button) rootView.findViewById(R.id.btnMap);
+        final Button btnMap = (Button) getActivity().findViewById(R.id.btnMap);
 
         String imageUrl = mEntry.getContent().getSrc();
         mImageDownloader.download(imageUrl, imageView);
