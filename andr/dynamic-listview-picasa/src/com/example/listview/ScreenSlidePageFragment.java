@@ -20,7 +20,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,55 +40,47 @@ import com.google.picasa.model.Entry;
  */
 public class ScreenSlidePageFragment extends Fragment {
     private Entry mEntry;
+    private int mPosition;
     final ImageDownloader mImageDownloader = IntentMap.IMAGE_DOWNLOADER;
 
     /**
-     * Factory method for this fragment class. Constructs a new fragment for the given page number.
+     * Factory method for this fragment class. Constructs a new fragment for the given position.
      */
-    public static ScreenSlidePageFragment create(Entry entry) {
-        ScreenSlidePageFragment fragment = new ScreenSlidePageFragment(entry);
+    public static ScreenSlidePageFragment create(int position) {
+        ScreenSlidePageFragment fragment = new ScreenSlidePageFragment();
+        Bundle args = new Bundle();
+        args.putInt(String.valueOf(R.string.entry_id_key), position);
+        fragment.setArguments(args);
         return fragment;
     }
 
     public ScreenSlidePageFragment() {
     }
 
-    public ScreenSlidePageFragment(Entry entry) {
-        mEntry = entry;
-    }
-
-
-
-    @Override
-    public void onSaveInstanceState (Bundle outState){
-        outState.putString(getString(R.string.entry_id_key), mEntry.getId().$t);
-        IntentMap.SHARED_MAP.put(mEntry.getId().$t, mEntry);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if(savedInstanceState!=null){
-            String key = savedInstanceState.getString(getString(R.string.entry_id_key));
-            mEntry = (Entry) IntentMap.SHARED_MAP.get(key);
-            if(mEntry == null){
-                Log.e(this.getClass().toString(), "mEntry cannot be null");
-            }
-        }
         super.onCreate(savedInstanceState);
+        mPosition = getArguments().getInt(String.valueOf(R.string.entry_id_key));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout containing a ImageView
-        ViewGroup rootView = (ViewGroup) inflater
-                .inflate(R.layout.fragment_screen_slide_page, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
+        return rootView;
+    }
 
-        ImageView imageView = (ImageView) rootView.findViewById(R.id.listImage);
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        ScreenSlideActivity activity = (ScreenSlideActivity)getActivity();
+        mEntry = activity.mEntries.get(mPosition);
+
+        ImageView imageView = (ImageView) getView().findViewById(R.id.listImage);
         String imageUrl = mEntry.getContent().getSrc();
         mImageDownloader.download(imageUrl, imageView);
-
-        //TODO: although this work but it's very error prone.  click listeners should be set on the parent activity
+        //TODO: although this works it's very error prone.  click listeners should be set on the parent activity
         final Button btnMap = (Button) getActivity().findViewById(R.id.btnMap);
         final Context ctx = getActivity();
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -112,7 +103,5 @@ public class ScreenSlidePageFragment extends Fragment {
                 }, 300);
             }
         });
-
-        return rootView;
     }
 }

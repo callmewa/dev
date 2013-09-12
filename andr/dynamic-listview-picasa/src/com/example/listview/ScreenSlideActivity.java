@@ -57,7 +57,6 @@ public class ScreenSlideActivity extends FragmentActivity {
      * The pager adapter, which provides the pages to the view pager widget.
      */
     private PagerAdapter mPagerAdapter;
-    ImageDownloader mImageDownloader = null;
     List<Entry> mEntries;
 
     @Override
@@ -69,7 +68,10 @@ public class ScreenSlideActivity extends FragmentActivity {
         String itemId = intent.getStringExtra(getString(R.string.detail_id_key));
         mEntries = (List<Entry>) IntentMap.SHARED_MAP.get(itemId);
 
-        mImageDownloader = IntentMap.IMAGE_DOWNLOADER;
+        //TODO; remove before live
+        if(mEntries == null){
+            throw new NullPointerException("mEntries is null");
+        }
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -152,7 +154,7 @@ public class ScreenSlideActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return ScreenSlidePageFragment.create(mEntries.get(position));
+            return ScreenSlidePageFragment.create(position);
         }
     }
 }
