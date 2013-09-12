@@ -17,8 +17,10 @@
 package com.example.listview;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +70,10 @@ public class ScreenSlidePageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         if(savedInstanceState!=null){
             String key = savedInstanceState.getString(getString(R.string.entry_id_key));
-            mEntry = (Entry) IntentMap.SHARED_MAP.remove(key);
+            mEntry = (Entry) IntentMap.SHARED_MAP.get(key);
+            if(mEntry == null){
+                Log.e(this.getClass().toString(), "mEntry cannot be null");
+            }
         }
         super.onCreate(savedInstanceState);
     }
@@ -81,11 +86,12 @@ public class ScreenSlidePageFragment extends Fragment {
                 .inflate(R.layout.fragment_screen_slide_page, container, false);
 
         ImageView imageView = (ImageView) rootView.findViewById(R.id.listImage);
-        final Button btnMap = (Button) getActivity().findViewById(R.id.btnMap);
-
         String imageUrl = mEntry.getContent().getSrc();
         mImageDownloader.download(imageUrl, imageView);
 
+        //TODO: although this work but it's very error prone.  click listeners should be set on the parent activity
+        final Button btnMap = (Button) getActivity().findViewById(R.id.btnMap);
+        final Context ctx = getActivity();
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -93,12 +99,11 @@ public class ScreenSlidePageFragment extends Fragment {
                 return true;
             }
         });
-
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BasicMapActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(ctx, BasicMapActivity.class);
+                ctx.startActivity(intent);
                 btnMap.postDelayed(new Runnable() {
                     @Override
                     public void run() {
