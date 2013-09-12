@@ -61,14 +61,14 @@ public class ScreenSlidePageFragment extends Fragment {
     @Override
     public void onSaveInstanceState (Bundle outState){
         outState.putString(getResources().getString(R.string.entry_id_key), mEntry.getId().$t);
-        IntentMap.SharedMap.put(mEntry.getId().$t, mEntry);
+        IntentMap.SHARED_MAP.put(mEntry.getId().$t, mEntry);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if(savedInstanceState!=null){
             String key = savedInstanceState.getString(getResources().getString(R.string.entry_id_key));
-            mEntry = (Entry) IntentMap.SharedMap.remove(key);
+            mEntry = (Entry) IntentMap.SHARED_MAP.remove(key);
         }
         super.onCreate(savedInstanceState);
     }
@@ -86,8 +86,6 @@ public class ScreenSlidePageFragment extends Fragment {
         String imageUrl = mEntry.getContent().getSrc();
         mImageDownloader.download(imageUrl, imageView);
 
-        //TODO: remove after adding map button
-
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -95,6 +93,36 @@ public class ScreenSlidePageFragment extends Fragment {
                 return true;
             }
         });
+//        ViewConfiguration config = ViewConfiguration.get(imageView.getContext());
+//        final int minSwipeDistance = config.getScaledTouchSlop();
+//        imageView.setOnTouchListener(new View.OnTouchListener() {
+//            /** Maintains a reference to the first detected down touch event. */
+//            float downX, downY;
+//
+//            /** Maintains a reference to the first detected up touch event. */
+//            float upX, upY;
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch(event.getAction())
+//                {
+//                    case MotionEvent.ACTION_DOWN:
+//                        downX = event.getX();
+//                        downY = event.getY();
+//                        return false;
+//                    case MotionEvent.ACTION_MOVE:
+//                        upX = event.getX();
+//                        upY = event.getY();
+//
+//                        float deltaX = downX - upX;
+//                        float deltaY = downY - upY;
+//
+//                        // swipe horizontal?
+//                        if(Math.abs(deltaX) > minSwipeDistance || Math.abs(deltaY)>minSwipeDistance){
+//                            btnMap.setVisibility(View.GONE);
+//                        }
+//                }
+//                return false;
+//            }
+//        });
 
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override

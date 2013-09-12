@@ -10,11 +10,11 @@ import java.util.Map;
  */
 public class IntentMap {
 
-    public static final Map <Object, Object> SharedMap;
+    public static final Map <Object, Object> SHARED_MAP;
     public static final ImageDownloader IMAGE_DOWNLOADER;
 
     static {
-        SharedMap = new HashMap<Object, Object>();
+        SHARED_MAP = new HashMap<Object, Object>();
         IMAGE_DOWNLOADER = new ImageDownloader();
     }
 

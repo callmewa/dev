@@ -129,7 +129,7 @@ public class LoadFeedData {
                 Gson gson = new Gson();
                 SearchResult result = gson.fromJson(reader,SearchResult.class);
                 List<Entry> entries = result.feed.entry;
-                IntentMap.SharedMap.put(albumEntry.id.$t, entries);
+                IntentMap.SHARED_MAP.put(albumEntry.id.$t, entries);
             }
             return null;
         }
