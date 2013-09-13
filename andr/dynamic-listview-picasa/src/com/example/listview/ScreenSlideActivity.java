@@ -28,6 +28,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.core.DepthPageTransformer;
 import com.example.core.IntentMap;
 import com.example.feed.ImageDownloader;
 import com.google.picasa.model.Entry;
@@ -71,7 +72,7 @@ public class ScreenSlideActivity extends FragmentActivity {
 
         //TODO; remove before live
         if(mEntries == null){
-            throw new NullPointerException("mEntries is null");
+            throw new NullPointerException("mEntries is null for itemId <" + itemId + "> in " + IntentMap.SHARED_MAP);
         }
 
         // Instantiate a ViewPager and a PagerAdapter.
@@ -88,6 +89,7 @@ public class ScreenSlideActivity extends FragmentActivity {
                 invalidateOptionsMenu();
             }
         });
+        mPager.setPageTransformer(true, new DepthPageTransformer());
     }
 
     @Override
