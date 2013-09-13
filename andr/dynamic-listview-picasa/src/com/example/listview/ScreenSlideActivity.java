@@ -58,6 +58,7 @@ public class ScreenSlideActivity extends FragmentActivity {
      */
     private PagerAdapter mPagerAdapter;
     List<Entry> mEntries;
+    boolean menuShown = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

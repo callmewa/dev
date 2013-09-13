@@ -23,8 +23,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.core.IntentMap;
 import com.example.feed.ImageDownloader;
@@ -74,7 +77,7 @@ public class ScreenSlidePageFragment extends Fragment {
     @Override
     public void onActivityCreated (Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        ScreenSlideActivity activity = (ScreenSlideActivity)getActivity();
+        final ScreenSlideActivity activity = (ScreenSlideActivity)getActivity();
         mEntry = activity.mEntries.get(mPosition);
 
         ImageView imageView = (ImageView) getView().findViewById(R.id.listImage);
@@ -82,11 +85,21 @@ public class ScreenSlidePageFragment extends Fragment {
         mImageDownloader.download(imageUrl, imageView);
         //TODO: although this works it's very error prone.  click listeners should be set on the parent activity
         final Button btnMap = (Button) getActivity().findViewById(R.id.btnMap);
+        final LinearLayout menuBar = (LinearLayout) getActivity().findViewById(R.id.menuBar);
+        final Animation enter = AnimationUtils.loadAnimation(getActivity(), R.anim.animation_enter);
+        final Animation exit = AnimationUtils.loadAnimation(getActivity(), R.anim.animation_leave);
         final Context ctx = getActivity();
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                btnMap.setVisibility(View.VISIBLE);
+                if(activity.menuShown){
+                    menuBar.startAnimation(exit);
+                    menuBar.setVisibility(View.GONE);
+                }else{
+                    menuBar.startAnimation(enter);
+                    menuBar.setVisibility(View.VISIBLE);
+                }
+                activity.menuShown=!activity.menuShown;
                 return true;
             }
         });
@@ -95,12 +108,6 @@ public class ScreenSlidePageFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(ctx, BasicMapActivity.class);
                 ctx.startActivity(intent);
-                btnMap.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        btnMap.setVisibility(View.GONE);
-                    }
-                }, 300);
             }
         });
     }

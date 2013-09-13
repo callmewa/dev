@@ -34,21 +34,21 @@
             android:layout_weight="85"/>
         <LinearLayout
             android:orientation="horizontal"
-            android:id="@+id/buttonCollect"
+            android:id="@+id/menuBar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:text="im a button"
             android:layout_weight="15"
             android:layout_gravity="bottom"
-            android:background="#80FFFFFF">
+            android:background="#80FFFFFF"
+            android:visibility="invisible">
             <Button
                 android:background="@drawable/red_button"
                 style="@style/button_text"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/btn_map_label"
-                android:id="@+id/btnMap"
-                android:visibility="gone"/>
+                android:id="@+id/btnMap"/>
         </LinearLayout>
 
     </LinearLayout>
