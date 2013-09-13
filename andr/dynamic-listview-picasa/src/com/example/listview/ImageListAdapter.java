@@ -32,7 +32,6 @@ public class ImageListAdapter extends BaseAdapter{
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mImageDownloader.setMode(ImageDownloader.Mode.CORRECT);
     }
 
     @Override

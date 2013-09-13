@@ -31,6 +31,7 @@ import android.view.MenuItem;
 import com.example.core.DepthPageTransformer;
 import com.example.core.IntentMap;
 import com.example.feed.ImageDownloader;
+import com.google.gson.reflect.TypeToken;
 import com.google.picasa.model.Entry;
 
 import java.util.ArrayList;
@@ -70,7 +71,13 @@ public class ScreenSlideActivity extends FragmentActivity {
         String itemId = intent.getStringExtra(getString(R.string.detail_id_key));
         mEntries = (List<Entry>) IntentMap.SHARED_MAP.get(itemId);
 
-        //TODO; remove before live
+        //retrieves the serialized mEntries should {@link IntentMap.SHARED_MAP} be destroyed
+        if(savedInstanceState!=null && mEntries == null){
+            String gson = savedInstanceState.getString(getString(R.string.detail_id_key));
+            mEntries = IntentMap.GSON.fromJson(gson, new TypeToken<List<Entry>>(){}.getType());
+        }
+
+        //TODO; remove before live.. A crash is happening because process is killed thus map is empty
         if(mEntries == null){
             throw new NullPointerException("mEntries is null for itemId <" + itemId + "> in " + IntentMap.SHARED_MAP);
         }
@@ -90,6 +97,12 @@ public class ScreenSlideActivity extends FragmentActivity {
             }
         });
         mPager.setPageTransformer(true, new DepthPageTransformer());
+    }
+
+    @Override
+    protected  void onSaveInstanceState(Bundle outState){
+        outState.putString(getString(R.string.detail_id_key) ,IntentMap.GSON.toJson(mEntries));
+        super.onSaveInstanceState(outState);
     }
 
     @Override
