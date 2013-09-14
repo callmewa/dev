@@ -3,13 +3,13 @@
 <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="300dp">
 
     <ImageView
             android:id="@+id/listImage"
-            android:layout_width="fill_parent"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:layout_gravity="center"/>
