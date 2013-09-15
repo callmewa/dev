@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -75,6 +76,7 @@ public class ScreenSlideActivity extends FragmentActivity {
         if(savedInstanceState!=null && mEntries == null){
             String gson = savedInstanceState.getString(getString(R.string.detail_id_key));
             mEntries = IntentMap.GSON.fromJson(gson, new TypeToken<List<Entry>>(){}.getType());
+            Log.d(this.getLocalClassName(),"recovered mEntries: " + gson);
         }
 
         //TODO; remove before live.. A crash is happening because process is killed thus map is empty

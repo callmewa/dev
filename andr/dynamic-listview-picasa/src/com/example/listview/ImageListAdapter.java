@@ -54,6 +54,8 @@ public class ImageListAdapter extends BaseAdapter{
         ViewGroup itemView;
         if (convertView == null){
             itemView = (ViewGroup) mLayoutInflater.inflate(R.layout.list_item, parent, false);
+            ViewGroup.LayoutParams params = itemView.getLayoutParams();
+            params.height = parent.getHeight()/2;
         }else{
             itemView = (ViewGroup) convertView;
         }
