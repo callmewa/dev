@@ -31,7 +31,6 @@ import android.view.MenuItem;
 
 import com.example.core.DepthPageTransformer;
 import com.example.core.IntentMap;
-import com.example.feed.ImageDownloader;
 import com.google.gson.reflect.TypeToken;
 import com.google.picasa.model.Entry;
 
@@ -76,7 +75,7 @@ public class ScreenSlideActivity extends FragmentActivity {
         if(savedInstanceState!=null && mEntries == null){
             String gson = savedInstanceState.getString(getString(R.string.detail_id_key));
             mEntries = IntentMap.GSON.fromJson(gson, new TypeToken<List<Entry>>(){}.getType());
-            Log.d(this.getLocalClassName(),"recovered mEntries: " + gson);
+            Log.d(this.getLocalClassName(),"-->recovered mEntries: " + gson);
         }
 
         //TODO; remove before live.. A crash is happening because process is killed thus map is empty
@@ -154,11 +153,8 @@ public class ScreenSlideActivity extends FragmentActivity {
     private class ImageSlidePagerAdapter extends  FragmentStatePagerAdapter{
         private List<Entry> mEntries = new ArrayList<Entry>();
 
-        final ImageDownloader mImageDownloader;
-
         public ImageSlidePagerAdapter(List<Entry> entries, FragmentManager fm) {
             super(fm);
-            mImageDownloader = IntentMap.IMAGE_DOWNLOADER;
             if (entries!=null){
                 this.mEntries = entries;
                 notifyDataSetChanged();
@@ -167,6 +163,9 @@ public class ScreenSlideActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
+            if(mEntries == null || mEntries.size() == 0){
+                Log.e(this.getClass().toString(), "-->mEntries is " + mEntries);
+            }
             return mEntries.size();
         }
 

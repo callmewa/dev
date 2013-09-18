@@ -1,6 +1,7 @@
 package com.example.feed;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.listview.ImageListAdapter;
 import com.example.core.IntentMap;
@@ -83,6 +84,7 @@ public class LoadFeedData {
         protected List<Entry> doInBackground(Void... params) {
             GoogleAuthenticator auth = new GoogleAuthenticator();
             authToken = auth.authenticate(client);
+            Log.d(this.getClass().toString(), "-->Authenticate with token: " + authToken);
             setAuthorizationHeader(authToken);
 
             InputStream source = retrieveStream(mUrl);
@@ -100,6 +102,7 @@ public class LoadFeedData {
         protected void onPostExecute(List<Entry> entries) {
             mAdapter.upDateEntries(entries);
             loadAlbum(entries);
+            Log.d(this.getClass().toString(), "-->Loaded feed: " + entries);
         }
     }
 
@@ -131,6 +134,7 @@ public class LoadFeedData {
                 List<Entry> entries = result.feed.entry;
                 IntentMap.SHARED_MAP.put(albumEntry.id.$t, entries);
             }
+            Log.d(this.getClass().toString(), "-->Loaded album: " + IntentMap.SHARED_MAP);
             return null;
         }
     }
