@@ -47,7 +47,7 @@
                 android:id="@+id/btnMap"
                 android:adjustViewBounds="true"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/map_button"/>
+                android:background="@drawable/map_btn"/>
         </LinearLayout>
 
     </LinearLayout>

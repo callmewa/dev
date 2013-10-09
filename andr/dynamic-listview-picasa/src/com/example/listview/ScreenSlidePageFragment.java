@@ -27,7 +27,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.example.core.IntentMap;
 import com.example.feed.ImageDownloader;
@@ -85,7 +84,7 @@ public class ScreenSlidePageFragment extends Fragment {
         mImageDownloader.download(imageUrl, imageView);
         //TODO: although this works it's very error prone.  click listeners should be set on the parent activity
         final Button btnMap = (Button) getActivity().findViewById(R.id.btnMap);
-        final LinearLayout menuBar = (LinearLayout) getActivity().findViewById(R.id.menuBar);
+        final ViewGroup menuBar = (ViewGroup) getActivity().findViewById(R.id.menuBar);
         final Animation enter = AnimationUtils.loadAnimation(getActivity(), R.anim.animation_enter);
         final Animation exit = AnimationUtils.loadAnimation(getActivity(), R.anim.animation_leave);
         final Context ctx = getActivity();
