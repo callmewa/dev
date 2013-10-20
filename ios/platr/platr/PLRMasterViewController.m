@@ -37,7 +37,7 @@
     
     GoogleAuthenticator *gAuth = [[GoogleAuthenticator alloc] init];
 
-    NSLog(@"AuthToken: %@", [gAuth authenticate]);
+    [gAuth authenticate];
      
     
 }

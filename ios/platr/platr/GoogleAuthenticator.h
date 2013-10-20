@@ -12,6 +12,6 @@
 
 - (NSString *) authenticate;
     
-
++ (NSString *) getAuthToken;
 
 @end

@@ -10,4 +10,6 @@
 
 @interface LoadFeedData : NSObject
 
+- (void) loadFeed;
+
 @end

@@ -24,10 +24,10 @@
 		163413BB18091277005A85AD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1634139318091277005A85AD /* Foundation.framework */; };
 		163413C318091277005A85AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 163413C118091277005A85AD /* InfoPlist.strings */; };
 		163413C618091277005A85AD /* platrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 163413C518091277005A85AD /* platrTests.m */; };
-		163413D0180919F9005A85AD /* Flores001-2.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 163413CF180919F9005A85AD /* Flores001-2.JPG */; };
-		163413D218091A04005A85AD /* Flake_iPhoneBeauties-10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 163413D118091A04005A85AD /* Flake_iPhoneBeauties-10.jpg */; };
 		16C95B7A180A0E2C00571C4C /* LoadFeedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C95B79180A0E2C00571C4C /* LoadFeedData.m */; };
 		16C95B7D180A1ADC00571C4C /* GoogleAuthenticator.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C95B7C180A1ADC00571C4C /* GoogleAuthenticator.m */; };
+		16E72A10180FAF470055B3B1 /* Flores001-2.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 16E72A0F180FAF470055B3B1 /* Flores001-2.JPG */; };
+		16E72A12180FAF530055B3B1 /* Flake_iPhoneBeauties-10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 16E72A11180FAF530055B3B1 /* Flake_iPhoneBeauties-10.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,12 +65,12 @@
 		163413C218091277005A85AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		163413C418091277005A85AD /* platrTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platrTests.h; sourceTree = "<group>"; };
 		163413C518091277005A85AD /* platrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = platrTests.m; sourceTree = "<group>"; };
-		163413CF180919F9005A85AD /* Flores001-2.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Flores001-2.JPG"; path = "../../../Downloads/Flores001-2.JPG"; sourceTree = "<group>"; };
-		163413D118091A04005A85AD /* Flake_iPhoneBeauties-10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Flake_iPhoneBeauties-10.jpg"; path = "../../../Downloads/Flake_iPhoneBeauties-10.jpg"; sourceTree = "<group>"; };
 		16C95B78180A0E2C00571C4C /* LoadFeedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadFeedData.h; sourceTree = "<group>"; };
 		16C95B79180A0E2C00571C4C /* LoadFeedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadFeedData.m; sourceTree = "<group>"; };
 		16C95B7B180A1ADC00571C4C /* GoogleAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleAuthenticator.h; sourceTree = "<group>"; };
 		16C95B7C180A1ADC00571C4C /* GoogleAuthenticator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleAuthenticator.m; sourceTree = "<group>"; };
+		16E72A0F180FAF470055B3B1 /* Flores001-2.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Flores001-2.JPG"; sourceTree = "<group>"; };
+		16E72A11180FAF530055B3B1 /* Flake_iPhoneBeauties-10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Flake_iPhoneBeauties-10.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,8 +149,8 @@
 		1634139818091277005A85AD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				163413D118091A04005A85AD /* Flake_iPhoneBeauties-10.jpg */,
-				163413CF180919F9005A85AD /* Flores001-2.JPG */,
+				16E72A11180FAF530055B3B1 /* Flake_iPhoneBeauties-10.jpg */,
+				16E72A0F180FAF470055B3B1 /* Flores001-2.JPG */,
 				1634139918091277005A85AD /* platr-Info.plist */,
 				1634139A18091277005A85AD /* InfoPlist.strings */,
 				1634139D18091277005A85AD /* main.m */,
@@ -258,8 +258,8 @@
 				163413A618091277005A85AD /* Default@2x.png in Resources */,
 				163413A818091277005A85AD /* Default-568h@2x.png in Resources */,
 				163413AB18091277005A85AD /* MainStoryboard.storyboard in Resources */,
-				163413D0180919F9005A85AD /* Flores001-2.JPG in Resources */,
-				163413D218091A04005A85AD /* Flake_iPhoneBeauties-10.jpg in Resources */,
+				16E72A10180FAF470055B3B1 /* Flores001-2.JPG in Resources */,
+				16E72A12180FAF530055B3B1 /* Flake_iPhoneBeauties-10.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
